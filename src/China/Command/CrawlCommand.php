@@ -48,7 +48,7 @@ class CrawlCommand extends Command implements CrawlerAwareInterface, FilesystemA
         }
         static::$client = new Client();
         $guzzleClient = new GuzzleClient([
-            'timeout' => 60,
+            'timeout' => 5,
             'verify' => false
         ]);
         static::$client->setClient($guzzleClient);

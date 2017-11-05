@@ -10,6 +10,7 @@
 
 namespace China\Command;
 
+use China\Holiday\Date;
 use China\Holiday\HolidayInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,7 +30,7 @@ class GetHolidayCommand extends CrawlCommand
      */
     public function configure()
     {
-        $this->setName('crawler:holiday');
+        $this->setName('crawl:holiday');
     }
 
 
@@ -45,16 +46,17 @@ class GetHolidayCommand extends CrawlCommand
         $crawler = $this->getClient()->request('GET', static::URL);
         $holidays = $crawler->filter('.festival_list')->each(function(Crawler $node){
             $fontNode = $node->filter('font');
+            $date = $this->parseToDate(strstr($node->text(), '['));
             return [
                 'name' => $fontNode->text(),
-                'type' => $this->convertClassToType($fontNode->attr('class')),
-                'date' => $this->parseToDate($fontNode->text()),
+                'type' => $this->convertColorToType($fontNode->attr('color')),
+                'date' => new Date($date[0], $date[1]),
             ];
         });
 
-        $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($holidays));
+        $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($holidays, JSON_UNESCAPED_UNICODE));
 
-        $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($output)));
+        $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
     }
 
     protected function parseToDate($dateString)
@@ -62,7 +64,7 @@ class GetHolidayCommand extends CrawlCommand
         return explode('/', trim($dateString, ']['));
     }
 
-    protected function convertClassToType($class)
+    protected function convertColorToType($class)
     {
         $type = '';
         switch ($class) {
