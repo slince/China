@@ -9,17 +9,7 @@
  */
 namespace China\Region;
 
-interface AddressInterface extends \JsonSerializable
+class Street extends Address
 {
-    /**
-     * 获取地址名称
-     * @return string
-     */
-    public function getName();
 
-    /**
-     * 获取上一级地址
-     * @return AddressInterface
-     */
-    public function getParent();
 }

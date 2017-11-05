@@ -17,9 +17,15 @@ abstract class Address implements AddressInterface
      */
     protected $name;
 
-    public function __construct($name)
+    /**
+     * @var AddressInterface
+     */
+    protected $parent;
+
+    public function __construct($name, AddressInterface $parent = null)
     {
         $this->name = $name;
+        $this->parent = $parent;
     }
 
     /**
