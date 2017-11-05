@@ -11,6 +11,7 @@
 namespace China\Command;
 
 use China\Holiday\Date;
+use China\Holiday\Holiday;
 use China\Holiday\HolidayInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,7 +34,6 @@ class GetHolidayCommand extends CrawlCommand
         $this->setName('crawl:holiday');
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -47,11 +47,9 @@ class GetHolidayCommand extends CrawlCommand
         $holidays = $crawler->filter('.festival_list')->each(function(Crawler $node){
             $fontNode = $node->filter('font');
             $date = $this->parseToDate(strstr($node->text(), '['));
-            return [
-                'name' => $fontNode->text(),
-                'type' => $this->convertColorToType($fontNode->attr('color')),
-                'date' => new Date($date[0], $date[1]),
-            ];
+            $date = new Date($date[0], $date[1]);
+            $type = $this->convertColorToType($fontNode->attr('color'));
+            return new Holiday($fontNode->text(), $type, $date);
         });
 
         $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($holidays, JSON_UNESCAPED_UNICODE));

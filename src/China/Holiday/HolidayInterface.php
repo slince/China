@@ -9,8 +9,7 @@
  */
 namespace China\Holiday;
 
-
-interface HolidayInterface
+interface HolidayInterface extends \JsonSerializable
 {
     /**
      * 节日类型，中国传统节日
@@ -29,4 +28,22 @@ interface HolidayInterface
      * @var string
      */
     const TYPE_INTERNATIONAL = 'international';
+
+    /**
+     * 获取名称
+     * @return string
+     */
+    public function getName();
+
+    /**
+     * 获取类型
+     * @return string
+     */
+    public function getType();
+
+    /**
+     * 获取日期
+     * @return DateInterface
+     */
+    public function getDate();
 }

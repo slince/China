@@ -24,7 +24,8 @@ class Application extends BaseApplication
         $filesystem = new Filesystem();
 
         return array_merge(parent::getDefaultCommands(), [
-            new GetHolidayCommand($filesystem)
+            new GetHolidayCommand($filesystem),
+            new GetNationalityCommand($filesystem)
         ]);
     }
 }
