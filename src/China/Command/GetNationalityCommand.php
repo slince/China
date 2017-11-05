@@ -2,6 +2,7 @@
 
 namespace China\Command;
 
+use China\Nationality\Nationality;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -35,8 +36,10 @@ class GetNationalityCommand extends CrawlCommand
         $crawler = $this->getClient()->request('GET', static::URL);
 
         $tables = $crawler->filter('table[log-set-param="table_view"]');
-        $nationalities = $this->extractPinyinData($tables->first());
+        $nationalities = $this->extractPinyinData($tables->eq(1));
+        $populations = $this->extractPopulationData($tables->eq(2));
 
+        $nationalities = $this->mergeData($nationalities,$populations);
         $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($nationalities, JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
@@ -46,18 +49,43 @@ class GetNationalityCommand extends CrawlCommand
     {
         $nationalities = $crawler->filter('tr')->each(function(Crawler $itemNode){
             $data = [];
-            foreach ($itemNode->filter('td') as $index => $tdNode) {
+            $itemNode->filter('td')->each(function(Crawler $tdNode, $index) use (&$data){
                 if ($index % 2 === 0) {
                     $data[$index] = [
-                        'name' => $tdNode->text(),
+                        'name' => trim($tdNode->text()),
                         'pinyin' => false
                     ];
                 } else {
-                    $data[$index - 1]['pinyin'] = $tdNode->text();
+                    $data[$index - 1]['pinyin'] = trim($tdNode->text());
                 }
-            }
+            });
             return $data;
         });
-        return $nationalities
+        return call_user_func_array('array_merge', $nationalities);
+    }
+
+    protected function extractPopulationData(Crawler $crawler)
+    {
+        $data = [];
+        $crawler->filter('tr')->each(function(Crawler $itemNode) use (&$data){
+            $tds = $itemNode->filter('td');
+            if (count($tds) > 0) {
+                $name = trim($tds->first()->text());
+                $data[$name] = trim($tds->eq(1)->text());
+            }
+        });
+        return $data;
+    }
+
+    protected function mergeData($nationalityInfos, $populations)
+    {
+        $nationalities = [];
+        foreach ($nationalityInfos as $nationalityInfo) {
+            $nationalities[] = new Nationality($nationalityInfo['name'],
+                $nationalityInfo['pinyin'],
+                isset($populations[$nationalityInfo['name']]) ? $populations[$nationalityInfo['name']] : 0
+            );
+        }
+        return $nationalities;
     }
 }
