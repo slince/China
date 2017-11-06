@@ -9,9 +9,18 @@
  */
 namespace China\Region;
 
-use China\Region\RegionServiceInterface;
+use China\Common\ResourceFile;
+use Doctrine\Common\Collections\Collection;
 
 class RegionService implements RegionServiceInterface
 {
+    /**
+     * @var RegionServiceInterface[]|Collection
+     */
+    protected $regions;
 
+    public function __construct(ResourceFile $resourceFile)
+    {
+        $this->regions = new RegionLoader($resourceFile);
+    }
 }

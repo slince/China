@@ -12,6 +12,24 @@ namespace China\Region\Location;
 interface AddressInterface extends \JsonSerializable
 {
     /**
+     * 类型，省
+     * @return string
+     */
+    const TYPE_PROVINCE = 'province';
+
+    /**
+     * 类型，市
+     * @return string
+     */
+    const TYPE_CITY = 'city';
+
+    /**
+     * 类型，区县
+     * @return string
+     */
+    const TYPE_AREA = 'area';
+
+    /**
      * 获取Code
      * @return string
      */
