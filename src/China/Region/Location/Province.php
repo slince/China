@@ -11,5 +11,11 @@ namespace China\Region\Location;
 
 class Province extends Address
 {
-
+    /**
+     * {@inheritdoc}
+     */
+    protected static function getTye()
+    {
+        return AddressInterface::TYPE_PROVINCE;
+    }
 }

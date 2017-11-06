@@ -9,23 +9,19 @@
  */
 namespace China\Region;
 
-use China\Common\ResourceLoader\LazyLoader;
-
-class RegionLoader extends LazyLoader
+final class AddressFactory
 {
     /**
-     * {@inheritdoc}
+     * 创建地区对象
+     * @param array $data
      */
-    public function handleRawData($data)
+    public static function createFromArray($data)
     {
+        if (!isset($data['type'])) {
 
-    }
+        }
+        switch ($data['type']) {
 
-    protected function convertToAddress($data)
-    {
-        $addresses = [];
-        foreach ($data as $regionData) {
-            $address =
         }
     }
 }

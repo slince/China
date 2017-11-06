@@ -106,7 +106,17 @@ abstract class Address implements AddressInterface
         return [
             'code' => $this->code,
             'name' => $this->name,
+            'type' => static::getTye(),
             'children' => $this->getChildren()
         ];
+    }
+
+    /**
+     * 获取当前类类型
+     * @return string
+     */
+    protected static function getTye()
+    {
+        return '';
     }
 }
