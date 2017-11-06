@@ -7,11 +7,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace China\Holiday;
+namespace China\Nationality;
 
 use Doctrine\Common\Collections\Collection;
 
-interface HolidayServiceInterface
+interface NationalityServiceInterface
 {
     /**
      * 获取所有的节假日
@@ -20,27 +20,9 @@ interface HolidayServiceInterface
     public function findAll();
 
     /**
-     * 获取所有的传统节日
-     * @return Collection
-     */
-    public function findTraditionalHolidays();
-
-    /**
-     * 获取所有的国际节日
-     * @return Collection
-     */
-    public function findInternationalHolidays();
-
-    /**
-     * 获取所有的节气
-     * @return Collection
-     */
-    public function findSolarTermHolidays();
-
-    /**
      * 查找指定的民族
      * @param string $name
-     * @return HolidayInterface
+     * @return NationalityInterface
      */
     public function find($name);
 }

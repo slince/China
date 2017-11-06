@@ -14,8 +14,6 @@ use Doctrine\Common\Collections\Collection;
 
 class HolidayService implements HolidayServiceInterface
 {
-    protected $holidayResourceLoader;
-
     /**
      * @var Collection
      */
@@ -63,5 +61,15 @@ class HolidayService implements HolidayServiceInterface
         return $this->holidays->filter(function(HolidayInterface $holiday) use ($type){
             return $holiday->getType() === $type;
         });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function find($name)
+    {
+        return $this->holidays->filter(function(HolidayInterface $holiday) use ($name){
+            return $holiday->getName() === $name;
+        })->first();
     }
 }
