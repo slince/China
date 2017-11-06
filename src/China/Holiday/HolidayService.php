@@ -14,11 +14,6 @@ use Doctrine\Common\Collections\Collection;
 
 class HolidayService implements HolidayServiceInterface
 {
-    /**
-     * @var ResourceFile
-     */
-    protected $resourceFile;
-
     protected $holidayResourceLoader;
 
     /**
@@ -28,7 +23,7 @@ class HolidayService implements HolidayServiceInterface
 
     public function __construct(ResourceFile $resourceFile)
     {
-        $this->resourceFile = $resourceFile;
+        $this->holidays = new HolidayLoader($resourceFile);
     }
 
     /**

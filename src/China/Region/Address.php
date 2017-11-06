@@ -47,6 +47,14 @@ abstract class Address implements AddressInterface
     /**
      * {@inheritdoc}
      */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function jsonSerialize()
     {
         return $this->getName();
