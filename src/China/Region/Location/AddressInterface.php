@@ -7,10 +7,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace China\Region;
+namespace China\Region\Location;
 
 interface AddressInterface extends \JsonSerializable
 {
+    /**
+     * 获取Code
+     * @return string
+     */
+    public function getCode();
+
     /**
      * 获取地址名称
      * @return string

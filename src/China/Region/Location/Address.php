@@ -8,10 +8,15 @@
  * file that was distributed with this source code.
  */
 
-namespace China\Region;
+namespace China\Region\Location;
 
 abstract class Address implements AddressInterface
 {
+    /**
+     * @var string
+     */
+    protected $code;
+
     /**
      * @var string
      */
@@ -22,8 +27,9 @@ abstract class Address implements AddressInterface
      */
     protected $parent;
 
-    public function __construct($name, AddressInterface $parent = null)
+    public function __construct($code, $name, AddressInterface $parent = null)
     {
+        $this->code = $code;
         $this->name = $name;
         $this->parent = $parent;
     }
@@ -34,6 +40,14 @@ abstract class Address implements AddressInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
