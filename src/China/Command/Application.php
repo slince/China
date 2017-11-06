@@ -25,7 +25,8 @@ class Application extends BaseApplication
 
         return array_merge(parent::getDefaultCommands(), [
             new GetHolidayCommand($filesystem),
-            new GetNationalityCommand($filesystem)
+            new GetNationalityCommand($filesystem),
+            new GetRegionCommand($filesystem)
         ]);
     }
 }

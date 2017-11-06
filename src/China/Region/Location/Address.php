@@ -10,6 +10,8 @@
 
 namespace China\Region\Location;
 
+use Doctrine\Common\Collections\Collection;
+
 abstract class Address implements AddressInterface
 {
     /**
@@ -26,6 +28,12 @@ abstract class Address implements AddressInterface
      * @var AddressInterface
      */
     protected $parent;
+
+    /**
+     * 子地区
+     * @var AddressInterface[]|Collection
+     */
+    protected $children;
 
     public function __construct($code, $name, AddressInterface $parent = null)
     {
@@ -61,9 +69,33 @@ abstract class Address implements AddressInterface
     /**
      * {@inheritdoc}
      */
+    public function setParent(AddressInterface $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 
     /**

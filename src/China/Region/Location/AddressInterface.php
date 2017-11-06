@@ -24,8 +24,26 @@ interface AddressInterface extends \JsonSerializable
     public function getName();
 
     /**
+     * 设置父级地区
+     * @param AddressInterface $parent
+     */
+    public function setParent(AddressInterface $parent);
+
+    /**
      * 获取上一级地址
      * @return AddressInterface
      */
     public function getParent();
+
+    /**
+     * 获取子地区
+     * @return AddressInterface[]
+     */
+    public function getChildren();
+
+    /**
+     * 设置子地区
+     * @param $children
+     */
+    public function setChildren($children);
 }

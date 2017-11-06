@@ -13,5 +13,5 @@ use China\Region\RegionServiceInterface;
 
 class RegionService implements RegionServiceInterface
 {
-    
+
 }

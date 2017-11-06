@@ -54,4 +54,16 @@ class CrawlCommand extends Command implements CrawlerAwareInterface, FilesystemA
         static::$client->setClient($guzzleClient);
         return static::$client;
     }
+
+    /**
+     * 去除空白字符
+     * @param string $string
+     * @return string
+     */
+    public static function clearBlankCharacters($string)
+    {
+        $handledString = preg_replace('/\s/', '', str_replace('&nbsp;', '', $string));
+        $handledString = str_replace('　', '', $handledString);
+        return trim($handledString);
+    }
 }
