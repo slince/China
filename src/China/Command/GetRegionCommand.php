@@ -60,34 +60,41 @@ class GetRegionCommand extends CrawlCommand
                 'name' => $this->clearBlankCharacters($name)
             ];
         });
+        //归类数据
+        list($provinces, $cities, $areas) = $this->organizeRegions($regions);
+        //构建树形结构
+        $root = new Province(0, null);
+        $this->buildRegionsTree(array_merge($provinces, $cities, $areas), $root);
 
-        list($provinces, $cities, $areas, $tree) = $this->organizeRegions($regions);
-
-        $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($tree, JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/provinces.json', \GuzzleHttp\json_encode($provinces, JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/cities.json', \GuzzleHttp\json_encode($cities, JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/areas.json', \GuzzleHttp\json_encode($areas, JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($root->getChildren(), JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
     }
 
+    /**
+     * 分拣数据
+     * @param array $regions
+     * @return array
+     */
     protected function organizeRegions($regions)
     {
         $provinces = $cities = $areas = [];
-
         foreach ($regions as $regionData) {
             if (substr($regionData['code'], 2) === '0000') {
-                $provinces[$regionData['code']] = new Province($regionData['code'], $regionData['name']);
+                $provinces[] = new Province($regionData['code'], $regionData['name']);
             } elseif (substr($regionData['code'], 4) === '00') {
-                $cities[$regionData['code']] = new City($regionData['code'], $regionData['name']);
+                $cities[] = new City($regionData['code'], $regionData['name']);
             } else {
-                $areas[$regionData['code']] = new Area($regionData['code'], $regionData['name']);
+                $areas[] = new Area($regionData['code'], $regionData['name']);
             }
         }
-        $tree = $this->buildRegionsTree(array_merge($provinces, $cities, $areas), new Province(0, null));
-
         return [
-            'provinces' => $provinces,
-            'cities' => $cities,
-            'areas' => $areas,
-            'tree' => $tree
+            $provinces,
+            $cities,
+            $areas,
         ];
     }
 
@@ -95,12 +102,13 @@ class GetRegionCommand extends CrawlCommand
     {
         $children = [];
         $shortCode = trim($address->getCode(), 0);
+
         foreach ($addresses as $index => $_address) {
             $_shortCode = trim($_address->getCode(), 0);
-            if (strstr($_shortCode, $shortCode) === 0 && strlen($shortCode) + 2 === strlen($_shortCode)) {
-                $this->buildTree($_address, $address);
+            if ((!$shortCode || strpos($_shortCode, $shortCode) === 0) && strlen($shortCode) + 2 === strlen($_shortCode)) {
+                unset($addresses[$index]);
+                $this->buildRegionsTree($addresses, $_address, true);
                 $children[] = $_address;
-                unset($address[$index]);
             }
         }
         $address->setChildren($children);

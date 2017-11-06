@@ -103,6 +103,10 @@ abstract class Address implements AddressInterface
      */
     public function jsonSerialize()
     {
-        return $this->getName();
+        return [
+            'code' => $this->code,
+            'name' => $this->name,
+            'children' => $this->getChildren()
+        ];
     }
 }
