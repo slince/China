@@ -16,6 +16,8 @@ use China\Holiday\HolidayService;
 use China\Holiday\HolidayServiceInterface;
 use China\Nationality\NationalityService;
 use China\Nationality\NationalityServiceInterface;
+use China\Region\RegionService;
+use China\Region\RegionServiceInterface;
 use Slince\Di\Container;
 
 class China
@@ -42,6 +44,7 @@ class China
         $this->container->setParameters([
             'resource.file.holidays' => RESOURCE_DIR  . 'holidays.json',
             'resource.file.nationalities' => RESOURCE_DIR  . 'nationalities.json',
+            'resource.file.regions' => RESOURCE_DIR  . 'regions/regions.json',
         ]);
     }
 
@@ -53,6 +56,9 @@ class China
         $this->container->set('nationality', function(Container $container){
             return new NationalityService(new ResourceFile($container->getParameter('resource.file.nationalities')));
         });
+        $this->container->set('region', function(Container $container){
+            return new RegionService(new ResourceFile($container->getParameter('resource.file.regions')));
+        });
     }
 
     /**
@@ -63,6 +69,7 @@ class China
     {
         return $this->container->get('holiday');
     }
+
     /**
      * 获取Nationality服务
      * @return NationalityServiceInterface
@@ -70,5 +77,14 @@ class China
     public function getNationality()
     {
         return $this->container->get('nationality');
+    }
+
+    /**
+     * 获取Region服务
+     * @return RegionServiceInterface
+     */
+    public function getRegion()
+    {
+        return $this->container->get('region');
     }
 }

@@ -38,7 +38,7 @@ class RegionService implements RegionServiceInterface
      */
     public function getProvinces()
     {
-        return $this->regions->getChildren();
+        return $this->regions->first()->getChildren();
     }
 
     /**
@@ -48,7 +48,7 @@ class RegionService implements RegionServiceInterface
     {
         return $this->filter(function(AddressInterface $address) use ($code){
             return $address->getCode() == $code;
-        });
+        })->first();
     }
 
     /**
@@ -58,7 +58,7 @@ class RegionService implements RegionServiceInterface
     {
         return $this->filter(function(AddressInterface $address) use ($name){
             return $address->getName() == $name;
-        });
+        })->first();
     }
 
     /**
@@ -66,12 +66,12 @@ class RegionService implements RegionServiceInterface
      */
     public function filter(\Closure $callback)
     {
-        if ($this->flattenRegions->count() > 0) {
+        if (!$this->flattenRegions->isEmpty()) {
             return $this->flattenRegions->filter($callback);
         }
         // 没有遍历过则自行遍历
         $addresses = [];
-        $this->traverseTree($this->regions, function(AddressInterface $address) use ($callback, &$addresses){
+        $this->traverseTree($this->regions->first(), function(AddressInterface $address) use ($callback, &$addresses){
             if ($callback($address) === true) {
                 $addresses[] = $callback;
             }

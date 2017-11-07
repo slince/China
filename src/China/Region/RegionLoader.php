@@ -25,6 +25,6 @@ class RegionLoader extends LazyLoader
             'code' => 0,
             'children' => $data
         ];
-        return AddressFactory::createFromArray($rootData);
+        return [AddressFactory::createFromArray($rootData)];
     }
 }

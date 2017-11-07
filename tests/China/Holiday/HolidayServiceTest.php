@@ -8,10 +8,10 @@ class HolidayServiceTest extends TestCase
 {
     public function testFindAll()
     {
-        $holidayService = $this->getChina()->getHolidays();
+        $holidayService = $this->getChina()->getHoliday();
         $holidays = $holidayService->findAll();
         $this->assertGreaterThan(0, count($holidays));
         $this->assertNotEmpty($holidays->toArray());
-        var_dump($holidays->toArray());
+//        var_dump($holidays->toArray());
     }
 }
