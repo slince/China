@@ -9,13 +9,36 @@
  */
 namespace China\Region;
 
+use China\Region\Location\AddressInterface;
+use China\Region\Location\Province;
+use Doctrine\Common\Collections\Collection;
+
 interface RegionServiceInterface
 {
+    /**
+     * 获取所有省份
+     * @return Province[]|Collection
+     */
     public function getProvinces();
 
-    public function getCities();
+    /**
+     * 筛选地区
+     * @param \Closure $callback
+     * @return AddressInterface[]|Collection
+     */
+    public function filter(\Closure $callback);
 
-    public function getAreas();
+    /**
+     * 根据Code查找地址
+     * @param string $code
+     * @return AddressInterface
+     */
+    public function findByCode($code);
 
-    public function getStreets();
+    /**
+     * 根据Name查找地址
+     * @param string $name
+     * @return AddressInterface
+     */
+    public function findByName($name);
 }
