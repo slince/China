@@ -47,14 +47,8 @@ class GetRegionCommand extends CrawlCommand
 
         $provinces = $cities = $areas = [];
         $regions = $crawler->filter('p.MsoNormal')->each(function(Crawler $node) use (&$provinces, &$cities, &$areas){
-            if (count($bNodes = $node->filter('b')) === 2) {
-                $code = $bNodes->first()->text();
-                $name = $bNodes->last()->text();
-            } else {
-                $codeNode = $node->filter('span[lang="EN-US"]');
-                $code = $codeNode->text();
-                $name = $codeNode->nextAll()->text();
-            }
+            $code = $node->filter('span[lang="EN-US"]')->text();
+            $name = $node->filter('span[style]')->last()->text();
             return [
                 'code' => preg_replace('/[^\d]/', '', $code),
                 'name' => $this->clearBlankCharacters($name)
@@ -101,8 +95,7 @@ class GetRegionCommand extends CrawlCommand
     protected function buildRegionsTree($addresses, AddressInterface $address)
     {
         $children = [];
-        $shortCode = trim($address->getCode(), 0);
-
+        $shortCode = str_pad(trim($address->getCode(), 0), 2, 0, STR_PAD_RIGHT);
         foreach ($addresses as $index => $_address) {
             $_shortCode = trim($_address->getCode(), 0);
             if ((!$shortCode || strpos($_shortCode, $shortCode) === 0) && strlen($shortCode) + 2 === strlen($_shortCode)) {

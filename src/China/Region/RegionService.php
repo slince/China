@@ -73,7 +73,7 @@ class RegionService implements RegionServiceInterface
         $addresses = [];
         $this->traverseTree($this->regions->first(), function(AddressInterface $address) use ($callback, &$addresses){
             if ($callback($address) === true) {
-                $addresses[] = $callback;
+                $addresses[] = $address;
             }
         });
         return new ArrayCollection($addresses);
@@ -87,10 +87,12 @@ class RegionService implements RegionServiceInterface
     protected function traverseTree(AddressInterface $address, \Closure $callback)
     {
         $callback($address);
-        foreach ($address->getChildren() as $child) {
-            $this->traverseTree($child, $callback);
-        }
         //将树形结构扁平化
         $this->flattenRegions->add($address);
+        if ($address->getChildren()) {
+            foreach ($address->getChildren() as $child) {
+                $this->traverseTree($child, $callback);
+            }
+        }
     }
 }
