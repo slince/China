@@ -22,13 +22,25 @@ use Slince\Di\Container;
 
 class China
 {
-    protected $name;
+    /**
+     * @var string
+     */
+    protected $name = '中国';
 
-    protected $officialName;
+    /**
+     * @var string
+     */
+    protected $officialName = '中华人民共和国';
 
-    protected $isoCode;
+    /**
+     * @var string
+     */
+    protected $isoCode = 'CN';
 
-    protected $language;
+    /**
+     * @var array
+     */
+    protected $languages = ['zh_CN', 'zh_TW'];
 
     protected $container;
 
@@ -86,5 +98,41 @@ class China
     public function getRegion()
     {
         return $this->container->get('region');
+    }
+
+    /**
+     * 获取名称
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * 获取官方名称
+     * @return string
+     */
+    public function getOfficialName()
+    {
+        return $this->officialName;
+    }
+
+    /**
+     * 获取ISO3166两位代码
+     * @return string
+     */
+    public function getIsoCode()
+    {
+        return $this->isoCode;
+    }
+
+    /**
+     * 获取语言
+     * @return array
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
     }
 }

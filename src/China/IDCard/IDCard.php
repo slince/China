@@ -63,7 +63,7 @@ class IDCard implements IDCardInterface
         }
         $length = strlen($id);
         if ($length !== 15 && $length !== 18) {
-            throw new \InvalidArgumentException(sprintf('The id "%s" card length should be 15 numbers or 18  numbers, given %d', $id, $length));
+            throw new \InvalidArgumentException(sprintf('The id "%s" card length should be 15 numbers or 18 numbers, given %d', $id, $length));
         }
         $convertedId = $id;
         if ($length === 15) {
