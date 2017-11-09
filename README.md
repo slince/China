@@ -83,6 +83,12 @@ $bengbushi = $regionService->findByName('蚌埠市');
 echo $bengbushi->getParent()->getName(); //输出蚌埠市所属省， 安徽省
 ```
 
+查询身份证所在地
+
+```php
+$huaiyuan = $regionService->findByIdCard('340321199212026972');
+```
+
 地区链功能
 
 通过`AddressInterface`的`getParent()`和`getChildren()`方法你可以自由地查找当前地区的上级或者下级地区，下级地区集合是`RegionCollectionInterfaec`
