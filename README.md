@@ -5,7 +5,6 @@
 我们的祖国-中国的资料库；本库主要包含民族，节日，地址库信息的查询；部分数据来源采集自百科以及国家统计局；欢迎收藏欢迎贡献代码；
 
 [![Build Status](https://img.shields.io/travis/slince/china/master.svg?style=flat-square)](https://travis-ci.org/slince/china)
-[![Coverage Status](https://img.shields.io/codecov/c/github/slince/china.svg?style=flat-square)](https://codecov.io/github/slince/china)
 [![Latest Stable Version](https://img.shields.io/packagist/v/slince/china.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/china)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/slince/china.svg?style=flat-square)](https://scrutinizer-ci.com/g/slince/china/?branch=master)
 
