@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China\Command\Dashboard;
 
 use China\Holiday\HolidayInterface;
@@ -23,6 +24,7 @@ class ShowHolidayCommand extends DashboardCommand
         HolidayInterface::TYPE_INTERNATIONAL => '国际节日',
         HolidayInterface::TYPE_SOLAR_TERM => '24节气',
     ];
+
     /**
      * {@inheritdoc}
      */
@@ -64,7 +66,7 @@ class ShowHolidayCommand extends DashboardCommand
             return [
                 "<info>{$holiday->getName()}</info>",
                 static::$types[$holiday->getType()],
-                $holiday->getDate()
+                $holiday->getDate(),
             ];
         }, $holidays);
         $style->table($headers, $rows);

@@ -7,19 +7,21 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace China\Holiday;
 
+namespace China\Holiday;
 
 class Date implements DateInterface
 {
     /**
-     * 天
+     * 天.
+     *
      * @var int
      */
     protected $day;
 
     /**
-     * 月
+     * 月.
+     *
      * @var int
      */
     protected $month;
@@ -75,10 +77,10 @@ class Date implements DateInterface
     {
         return str_replace([
             '{month}',
-            '{day}'
+            '{day}',
         ], [
             $this->month,
-            $this->day
+            $this->day,
         ], $format);
     }
 
@@ -91,7 +93,8 @@ class Date implements DateInterface
     }
 
     /**
-     * 字符串输出
+     * 字符串输出.
+     *
      * @return string
      */
     public function __toString()

@@ -22,6 +22,7 @@ class GetHolidayCommand extends CrawlCommand
 {
     /**
      * 节假日资源地址
+     *
      * @var string
      */
     const URL = 'http://www.sojson.com/time/holiday.html';
@@ -42,7 +43,7 @@ class GetHolidayCommand extends CrawlCommand
     {
         $style = new SymfonyStyle($input, $output);
 
-        $outputFile = static::RESOURCE_DIR . '/holidays.json';
+        $outputFile = static::RESOURCE_DIR.'/holidays.json';
 
         $crawler = $this->getClient()->request('GET', static::URL);
         $holidays = $crawler->filter('.festival_list')->each(function(Crawler $node){
@@ -50,6 +51,7 @@ class GetHolidayCommand extends CrawlCommand
             $date = $this->parseToDate(strstr($node->text(), '['));
             $date = new Date($date[0], $date[1]);
             $type = $this->convertColorToType($fontNode->attr('color'));
+
             return new Holiday($fontNode->text(), $type, $date);
         });
 
@@ -79,6 +81,7 @@ class GetHolidayCommand extends CrawlCommand
                 $type = HolidayInterface::TYPE_SOLAR_TERM;
                 break;
         }
+
         return $type;
     }
 }

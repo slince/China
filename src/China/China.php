@@ -7,9 +7,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China;
 
-define('RESOURCE_DIR', __DIR__  . '/../../resources/');
+define('RESOURCE_DIR', __DIR__.'/../../resources/');
 
 use China\Common\ResourceFile;
 use China\Holiday\HolidayService;
@@ -54,9 +55,9 @@ class China
     protected function registerParameters()
     {
         $this->container->setParameters([
-            'resource.file.holidays' => RESOURCE_DIR  . 'holidays.json',
-            'resource.file.nationalities' => RESOURCE_DIR  . 'nationalities.json',
-            'resource.file.regions' => RESOURCE_DIR  . 'regions/regions.json',
+            'resource.file.holidays' => RESOURCE_DIR.'holidays.json',
+            'resource.file.nationalities' => RESOURCE_DIR.'nationalities.json',
+            'resource.file.regions' => RESOURCE_DIR.'regions/regions.json',
         ]);
     }
 
@@ -75,6 +76,7 @@ class China
 
     /**
      * 获取Holiday服务
+     *
      * @return HolidayServiceInterface
      */
     public function getHoliday()
@@ -84,6 +86,7 @@ class China
 
     /**
      * 获取Nationality服务
+     *
      * @return NationalityServiceInterface
      */
     public function getNationality()
@@ -93,6 +96,7 @@ class China
 
     /**
      * 获取Region服务
+     *
      * @return RegionServiceInterface
      */
     public function getRegion()
@@ -101,7 +105,8 @@ class China
     }
 
     /**
-     * 获取名称
+     * 获取名称.
+     *
      * @return string
      */
     public function getName()
@@ -110,7 +115,8 @@ class China
     }
 
     /**
-     * 获取官方名称
+     * 获取官方名称.
+     *
      * @return string
      */
     public function getOfficialName()
@@ -120,6 +126,7 @@ class China
 
     /**
      * 获取ISO3166两位代码
+     *
      * @return string
      */
     public function getIsoCode()
@@ -129,6 +136,7 @@ class China
 
     /**
      * 获取语言
+     *
      * @return array
      */
     public function getLanguages()

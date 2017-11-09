@@ -13,12 +13,12 @@ class AddressFactoryTest extends TestCase
         $anhui = AddressFactory::createFromArray([
             'code' => 340000,
             'name' => '安徽省',
-            'type'  => AddressInterface::TYPE_PROVINCE
+            'type' => AddressInterface::TYPE_PROVINCE,
         ]);
         $bengbu = AddressFactory::createFromArray([
             'code' => 340320,
             'name' => '蚌埠市',
-            'type'  => AddressInterface::TYPE_CITY
+            'type' => AddressInterface::TYPE_CITY,
         ], $anhui);
         $this->assertEquals($anhui, $bengbu->getParent());
     }
@@ -28,7 +28,7 @@ class AddressFactoryTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         AddressFactory::createFromArray([
             'code' => 340000,
-            'name' => '安徽省'
+            'name' => '安徽省',
         ]);
     }
 }

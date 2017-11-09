@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China\Region;
 
 use China\Region\Location\AddressInterface;
@@ -18,9 +19,12 @@ final class AddressFactory
 {
     /**
      * 创建地区对象
-     * @param array $data
+     *
+     * @param array            $data
      * @param AddressInterface $parent
+     *
      * @return AddressInterface
+     *
      * @throws \InvalidArgumentException
      */
     public static function createFromArray($data, AddressInterface $parent = null)
@@ -50,6 +54,7 @@ final class AddressFactory
             }, $data['children']);
             $address->setChildren(new RegionCollection($children));
         }
+
         return $address;
     }
 }

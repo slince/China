@@ -13,7 +13,8 @@ namespace China\IDCard;
 class IDCard implements IDCardInterface
 {
     /**
-     * 身份证数字
+     * 身份证数字.
+     *
      * @var number
      */
     protected $id;
@@ -49,11 +50,13 @@ class IDCard implements IDCardInterface
         if ($this->isShortLength()) {
             $id = IDCardUtils::convertIDCard15to18($this->id);
         }
+
         return $id;
     }
 
     /**
-     * 身份证是否合法
+     * 身份证是否合法.
+     *
      * @param string $id
      */
     public static function assertValidIDCard($id)

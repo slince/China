@@ -32,7 +32,6 @@ class GetNationalityCommand extends CrawlCommand
         $this->setDescription('从百度百科采集民族信息');
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -40,7 +39,7 @@ class GetNationalityCommand extends CrawlCommand
     {
         $style = new SymfonyStyle($input, $output);
 
-        $outputFile = static::RESOURCE_DIR . '/nationalities.json';
+        $outputFile = static::RESOURCE_DIR.'/nationalities.json';
 
         $crawler = $this->getClient()->request('GET', static::URL);
 
@@ -62,14 +61,16 @@ class GetNationalityCommand extends CrawlCommand
                 if ($index % 2 === 0) {
                     $data[$index] = [
                         'name' => trim($tdNode->text()),
-                        'pinyin' => false
+                        'pinyin' => false,
                     ];
                 } else {
                     $data[$index - 1]['pinyin'] = trim($tdNode->text());
                 }
             });
+
             return $data;
         });
+
         return call_user_func_array('array_merge', $nationalities);
     }
 
@@ -83,6 +84,7 @@ class GetNationalityCommand extends CrawlCommand
                 $data[$name] = trim($tds->eq(1)->text());
             }
         });
+
         return $data;
     }
 
@@ -95,6 +97,7 @@ class GetNationalityCommand extends CrawlCommand
                 isset($populations[$nationalityInfo['name']]) ? $populations[$nationalityInfo['name']] : 0
             );
         }
+
         return $nationalities;
     }
 }

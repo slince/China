@@ -30,7 +30,8 @@ abstract class Address implements AddressInterface
     protected $parent;
 
     /**
-     * 子地区
+     * 子地区.
+     *
      * @var AddressInterface[]|Collection
      */
     protected $children;
@@ -107,12 +108,13 @@ abstract class Address implements AddressInterface
             'code' => $this->code,
             'name' => $this->name,
             'type' => static::getType(),
-            'children' => $this->getChildren()
+            'children' => $this->getChildren(),
         ];
     }
 
     /**
-     * 获取当前类类型
+     * 获取当前类类型.
+     *
      * @return string
      */
     public static function getType()

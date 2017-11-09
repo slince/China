@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China\Command\Dashboard;
 
 use China\Nationality\NationalityInterface;
@@ -39,7 +40,7 @@ class ShowNationalityCommand extends DashboardCommand
             return [
                 "<info>{$nationality->getName()}</info>",
                 $nationality->getPinyin(),
-                $nationality->getPopulation()
+                $nationality->getPopulation(),
             ];
         }, $nationalities);
         $style->table($headers, $rows);

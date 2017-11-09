@@ -11,7 +11,7 @@ class NationalityLoaderTest extends TestCase
 {
     public function testConstructor()
     {
-        $resource = new ResourceFile(__DIR__ . '/../../../resources/nationalities.json');
+        $resource = new ResourceFile(__DIR__.'/../../../resources/nationalities.json');
         $holidays = new NationalityLoader($resource);
         $this->assertNotEmpty($holidays->toArray());
         $this->assertInstanceOf(NationalityInterface::class, $holidays->first());

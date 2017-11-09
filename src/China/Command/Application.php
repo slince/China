@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China\Command;
 
 use Symfony\Component\Console\Application as BaseApplication;
@@ -29,7 +30,7 @@ class Application extends BaseApplication
             new GetRegionCommand($filesystem),
             new Dashboard\ShowHolidayCommand(),
             new Dashboard\ShowNationalityCommand(),
-            new Dashboard\ShowRegionCommand()
+            new Dashboard\ShowRegionCommand(),
         ]);
     }
 }

@@ -7,8 +7,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace China\Nationality;
 
+namespace China\Nationality;
 
 class Nationality implements NationalityInterface
 {
@@ -66,7 +66,7 @@ class Nationality implements NationalityInterface
         return [
             'name' => $this->name,
             'pinyin' => $this->pinyin,
-            'population' => $this->population
+            'population' => $this->population,
         ];
     }
 }

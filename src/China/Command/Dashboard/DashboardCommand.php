@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China\Command\Dashboard;
 
 use China\China;
@@ -21,6 +22,7 @@ class DashboardCommand extends Command
 
     /**
      * 获取china对象
+     *
      * @return China
      */
     protected function getChina()
@@ -28,6 +30,7 @@ class DashboardCommand extends Command
         if (is_null($this->china)) {
             $this->china = new China();
         }
+
         return $this->china;
     }
 }

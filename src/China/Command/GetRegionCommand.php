@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China\Command;
 
 use China\Region\Location\AddressInterface;
@@ -22,6 +23,7 @@ class GetRegionCommand extends CrawlCommand
 {
     /**
      * 资源地址
+     *
      * @var string
      */
     const URL = 'http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/201703/t20170310_1471429.html';
@@ -42,7 +44,7 @@ class GetRegionCommand extends CrawlCommand
     {
         $style = new SymfonyStyle($input, $output);
 
-        $outputFile = static::RESOURCE_DIR . '/regions/regions.json';
+        $outputFile = static::RESOURCE_DIR.'/regions/regions.json';
 
         $crawler = $this->getClient()->request('GET', static::URL);
 
@@ -50,9 +52,10 @@ class GetRegionCommand extends CrawlCommand
         $regions = $crawler->filter('p.MsoNormal')->each(function(Crawler $node) use (&$provinces, &$cities, &$areas){
             $code = $node->filter('span[lang="EN-US"]')->text();
             $name = $node->filter('span[style]')->last()->text();
+
             return [
                 'code' => preg_replace('/[^\d]/', '', $code),
-                'name' => $this->clearBlankCharacters($name)
+                'name' => $this->clearBlankCharacters($name),
             ];
         });
         //归类数据
@@ -62,17 +65,19 @@ class GetRegionCommand extends CrawlCommand
         $root->shortCode = 0;
         $this->buildRegionsTree(array_merge($provinces, $cities, $areas), $root);
 
-        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/provinces.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($provinces), JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/cities.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($cities), JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/areas.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($areas), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR.'/regions/provinces.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($provinces), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR.'/regions/cities.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($cities), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR.'/regions/areas.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($areas), JSON_UNESCAPED_UNICODE));
         $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($root->getChildren(), JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
     }
 
     /**
-     * 提取省份数据，去除子地区数据
+     * 提取省份数据，去除子地区数据.
+     *
      * @param AddressInterface[] $addresses
+     *
      * @return AddressInterface[]
      */
     protected function extractAddressesWithoutChildren(array $addresses)
@@ -80,13 +85,16 @@ class GetRegionCommand extends CrawlCommand
         return array_map(function(AddressInterface $address){
             $address = clone $address;
             $address->setChildren([]);
+
             return $address;
         }, $addresses);
     }
 
     /**
-     * 分拣数据
+     * 分拣数据.
+     *
      * @param array $regions
+     *
      * @return array
      */
     protected function organizeRegions($regions)
@@ -105,11 +113,12 @@ class GetRegionCommand extends CrawlCommand
                 $cities[] = $city;
             } else {
                 $area = new Area($regionData['code'], $regionData['name']);
-                $area->parentCode =  substr($regionData['code'], 0, 4);
+                $area->parentCode = substr($regionData['code'], 0, 4);
                 $area->shortCode = $regionData['code'];
                 $areas[] = $area;
             }
         }
+
         return [
             $provinces,
             $cities,

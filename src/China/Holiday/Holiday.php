@@ -66,7 +66,7 @@ class Holiday implements HolidayInterface
         return [
             'name' => $this->name,
             'type' => $this->type,
-            'date' => $this->date
+            'date' => $this->date,
         ];
     }
 }

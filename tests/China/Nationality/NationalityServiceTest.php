@@ -1,7 +1,7 @@
 <?php
+
 namespace China\Tests\Nationality;
 
-use China\Nationality\NationalityInterface;
 use China\Tests\TestCase;
 
 class NationalityServiceTest extends TestCase

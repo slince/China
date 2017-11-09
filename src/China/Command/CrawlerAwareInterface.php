@@ -15,7 +15,8 @@ use Goutte\Client;
 interface CrawlerAwareInterface
 {
     /**
-     * 获取Goutte Client
+     * 获取Goutte Client.
+     *
      * @return Client
      */
     public function getClient();

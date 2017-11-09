@@ -27,10 +27,11 @@ class CrawlCommand extends Command implements CrawlerAwareInterface, FilesystemA
     protected static $client;
 
     /**
-     * 资源目录
+     * 资源目录.
+     *
      * @var string
      */
-    const RESOURCE_DIR = __DIR__ . '/../../../resources/';
+    const RESOURCE_DIR = __DIR__.'/../../../resources/';
 
     public function __construct(Filesystem $filesystem)
     {
@@ -49,21 +50,25 @@ class CrawlCommand extends Command implements CrawlerAwareInterface, FilesystemA
         static::$client = new Client();
         $guzzleClient = new GuzzleClient([
             'timeout' => 5,
-            'verify' => false
+            'verify' => false,
         ]);
         static::$client->setClient($guzzleClient);
+
         return static::$client;
     }
 
     /**
-     * 去除空白字符
+     * 去除空白字符.
+     *
      * @param string $string
+     *
      * @return string
      */
     public static function clearBlankCharacters($string)
     {
         $handledString = preg_replace('/\s/', '', str_replace('&nbsp;', '', $string));
         $handledString = str_replace('　', '', $handledString);
+
         return trim($handledString);
     }
 }

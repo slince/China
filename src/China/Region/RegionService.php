@@ -7,12 +7,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace China\Region;
 
 use China\Common\ResourceFile;
 use China\IDCard\IDCard;
 use China\Region\Location\AddressInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class RegionService implements RegionServiceInterface
@@ -24,7 +24,8 @@ class RegionService implements RegionServiceInterface
     protected $regions;
 
     /**
-     * 根据code做索引
+     * 根据code做索引.
+     *
      * @var AddressInterface[]|Collection
      */
     protected $flattenRegions;
@@ -52,6 +53,7 @@ class RegionService implements RegionServiceInterface
             $idCard = new IDCard($idCard);
         }
         $areaCode = substr($idCard, 0, 6);
+
         return $this->findByCode($areaCode);
     }
 
@@ -70,13 +72,15 @@ class RegionService implements RegionServiceInterface
                 $addresses[] = $address;
             }
         });
+
         return new RegionCollection($addresses);
     }
 
     /**
-     * 遍历地区树
+     * 遍历地区树.
+     *
      * @param AddressInterface $address
-     * @param \Closure $callback
+     * @param \Closure         $callback
      */
     protected function traverseTree(AddressInterface $address, \Closure $callback)
     {

@@ -11,7 +11,7 @@ class HolidayLoaderTest extends TestCase
 {
     public function testCreate()
     {
-        $resource = new ResourceFile(__DIR__ . '/../../../resources/holidays.json');
+        $resource = new ResourceFile(__DIR__.'/../../../resources/holidays.json');
         $holidays = new HolidayLoader($resource);
         $this->assertNotEmpty($holidays->toArray());
         $this->assertInstanceOf(HolidayInterface::class, $holidays->first());
