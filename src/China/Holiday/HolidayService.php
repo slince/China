@@ -56,7 +56,10 @@ class HolidayService implements HolidayServiceInterface
         return $this->findHolidaysByType(HolidayInterface::TYPE_SOLAR_TERM);
     }
 
-    protected function findHolidaysByType($type)
+    /**
+     * {@inheritdoc}
+     */
+    public function findHolidaysByType($type)
     {
         return $this->holidays->filter(function(HolidayInterface $holiday) use ($type){
             return $holiday->getType() === $type;
