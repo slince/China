@@ -10,6 +10,7 @@
 namespace China\Region;
 
 use China\Common\ResourceFile;
+use China\IDCard\IDCard;
 use China\Region\Location\AddressInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -38,7 +39,7 @@ class RegionService implements RegionServiceInterface
      */
     public function getProvinces()
     {
-        return $this->regions->first()->getChildren();
+        return new ArrayCollection($this->regions->first()->getChildren());
     }
 
     /**
@@ -59,6 +60,18 @@ class RegionService implements RegionServiceInterface
         return $this->filter(function(AddressInterface $address) use ($name){
             return $address->getName() == $name;
         })->first();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByIdCard($idCard)
+    {
+        if (is_string($idCard)) {
+            $idCard = new IDCard($idCard);
+        }
+        $areaCode = substr($idCard, 0, 6);
+        return $this->findByCode($areaCode);
     }
 
     /**

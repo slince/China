@@ -9,6 +9,7 @@
  */
 namespace China\Region;
 
+use China\IDCard\IDCardInterface;
 use China\Region\Location\AddressInterface;
 use China\Region\Location\Province;
 use Doctrine\Common\Collections\Collection;
@@ -31,14 +32,21 @@ interface RegionServiceInterface
     /**
      * 根据Code查找地址
      * @param string $code
-     * @return AddressInterface
+     * @return AddressInterface|false
      */
     public function findByCode($code);
 
     /**
      * 根据Name查找地址
      * @param string $name
-     * @return AddressInterface
+     * @return AddressInterface|false
      */
     public function findByName($name);
+
+    /**
+     * 查找身份证号码归属地
+     * @param string|IDCardInterface $idCard
+     * @return AddressInterface|false
+     */
+    public function findByIdCard($idCard);
 }
