@@ -58,14 +58,29 @@ class GetRegionCommand extends CrawlCommand
         list($provinces, $cities, $areas) = $this->organizeRegions($regions);
         //构建树形结构
         $root = new Province(0, null);
+        $root->shortCode = 0;
         $this->buildRegionsTree(array_merge($provinces, $cities, $areas), $root);
 
-        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/provinces.json', \GuzzleHttp\json_encode($provinces, JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/cities.json', \GuzzleHttp\json_encode($cities, JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/areas.json', \GuzzleHttp\json_encode($areas, JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/provinces.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($provinces), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/cities.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($cities), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile(static::RESOURCE_DIR . '/regions/areas.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($areas), JSON_UNESCAPED_UNICODE));
         $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($root->getChildren(), JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
+    }
+
+    /**
+     * 提取省份数据，去除子地区数据
+     * @param AddressInterface[] $addresses
+     * @return AddressInterface[]
+     */
+    protected function extractAddressesWithoutChildren(array $addresses)
+    {
+        return array_map(function(AddressInterface $address){
+            $address = clone $address;
+            $address->setChildren([]);
+            return $address;
+        }, $addresses);
     }
 
     /**
@@ -78,11 +93,20 @@ class GetRegionCommand extends CrawlCommand
         $provinces = $cities = $areas = [];
         foreach ($regions as $regionData) {
             if (substr($regionData['code'], 2) === '0000') {
-                $provinces[] = new Province($regionData['code'], $regionData['name']);
+                $province = new Province($regionData['code'], $regionData['name']);
+                $province->parentCode = 0;
+                $province->shortCode = substr($regionData['code'], 0, 2);
+                $provinces[] = $province;
             } elseif (substr($regionData['code'], 4) === '00') {
-                $cities[] = new City($regionData['code'], $regionData['name']);
+                $city = new City($regionData['code'], $regionData['name']);
+                $city->parentCode = substr($regionData['code'], 0, 2);
+                $city->shortCode = substr($regionData['code'], 0, 4);
+                $cities[] = $city;
             } else {
-                $areas[] = new Area($regionData['code'], $regionData['name']);
+                $area = new Area($regionData['code'], $regionData['name']);
+                $area->parentCode =  substr($regionData['code'], 0, 4);
+                $area->shortCode = $regionData['code'];
+                $areas[] = $area;
             }
         }
         return [
@@ -95,12 +119,10 @@ class GetRegionCommand extends CrawlCommand
     protected function buildRegionsTree($addresses, AddressInterface $address)
     {
         $children = [];
-        $shortCode = str_pad(trim($address->getCode(), 0), 2, 0, STR_PAD_RIGHT);
         foreach ($addresses as $index => $_address) {
-            $_shortCode = trim($_address->getCode(), 0);
-            if ((!$shortCode || strpos($_shortCode, $shortCode) === 0) && strlen($shortCode) + 2 === strlen($_shortCode)) {
+            if ($_address->parentCode == $address->shortCode) {
                 unset($addresses[$index]);
-                $this->buildRegionsTree($addresses, $_address, true);
+                $this->buildRegionsTree($addresses, $_address);
                 $children[] = $_address;
             }
         }
