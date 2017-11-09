@@ -29,6 +29,7 @@ class GetNationalityCommand extends CrawlCommand
     public function configure()
     {
         $this->setName('crawl:nationality');
+        $this->setDescription('从百度百科采集民族信息');
     }
 
 

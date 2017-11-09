@@ -28,9 +28,10 @@ class ShowHolidayCommand extends DashboardCommand
      */
     public function configure()
     {
-        $this->setName('holiday:show');
+        $this->setName('dashboard:holiday');
         $this->addOption('type', 't', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, '按照类型筛选');
         $this->addOption('all', 'a',  InputOption::VALUE_NONE, '展现全部数据');
+        $this->setDescription('展示节假日信息');
     }
 
     /**

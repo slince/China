@@ -29,6 +29,7 @@ class Application extends BaseApplication
             new GetRegionCommand($filesystem),
             new Dashboard\ShowHolidayCommand(),
             new Dashboard\ShowNationalityCommand(),
+            new Dashboard\ShowRegionCommand()
         ]);
     }
 }

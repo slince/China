@@ -32,6 +32,7 @@ class GetRegionCommand extends CrawlCommand
     public function configure()
     {
         $this->setName('crawl:region');
+        $this->setDescription('从国家统计局采集地区信息');
     }
 
     /**

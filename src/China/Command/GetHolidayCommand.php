@@ -32,6 +32,7 @@ class GetHolidayCommand extends CrawlCommand
     public function configure()
     {
         $this->setName('crawl:holiday');
+        $this->setDescription('采集节假日数据');
     }
 
     /**

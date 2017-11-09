@@ -106,7 +106,7 @@ abstract class Address implements AddressInterface
         return [
             'code' => $this->code,
             'name' => $this->name,
-            'type' => static::getTye(),
+            'type' => static::getType(),
             'children' => $this->getChildren()
         ];
     }
@@ -115,7 +115,7 @@ abstract class Address implements AddressInterface
      * 获取当前类类型
      * @return string
      */
-    protected static function getTye()
+    public static function getType()
     {
         return '';
     }

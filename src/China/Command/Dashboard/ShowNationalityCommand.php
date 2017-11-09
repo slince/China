@@ -21,7 +21,8 @@ class ShowNationalityCommand extends DashboardCommand
      */
     public function configure()
     {
-        $this->setName('nationality:show');
+        $this->setName('dashboard:nationality');
+        $this->setDescription('展示民族数据信息');
     }
 
     /**
