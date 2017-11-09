@@ -2,7 +2,7 @@
    <img src="https://raw.githubusercontent.com/slince/china/master/resources/china.png" alt="中国">
 </p>
 
-我们的祖国-中国的资料库；本库主要包含民族，节日，地址库信息的查询；部分数据来源采集自百科以及国家统计局；欢迎收藏欢迎贡献代码；
+我国的资料库查询库；本库主要包含民族、节日、地址库信息的查询；部分数据来源采集自百科以及国家统计局；欢迎收藏欢迎贡献代码；
 
 [![Build Status](https://img.shields.io/travis/slince/china/master.svg?style=flat-square)](https://travis-ci.org/slince/china)
 [![Latest Stable Version](https://img.shields.io/packagist/v/slince/china.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/china)
@@ -112,6 +112,9 @@ $bengbushi = clone $bengbushi; //此处需要克隆对象，如果直接修改�
 $bengbushi->setChildren([]);
 echo json_encode($bengbushi);
 ```
+
+> 建议：在电商系统中城市县三级地区联动的数据可以使用此方法获取，避免将数据导入数据库再从数据库获取；
+
 
 ## 命令行工具
 
