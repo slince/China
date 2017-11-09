@@ -72,7 +72,7 @@ $hezhe = $nationalityService->find('赫哲族'):
 
 $china = new China();
 
-$regionService = $chna->getRegion();
+$regionService = $china->getRegion();
 
 print_r($regionService->getProvinces()); //获取树形省市县地区结构
 ```
