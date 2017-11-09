@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Collection;
 
 class RegionService implements RegionServiceInterface
 {
+    use AddressFinderTrait;
     /**
      * @var AddressInterface
      */
@@ -31,7 +32,7 @@ class RegionService implements RegionServiceInterface
     public function __construct(ResourceFile $resourceFile)
     {
         $this->regions = new RegionLoader($resourceFile);
-        $this->flattenRegions = new ArrayCollection();
+        $this->flattenRegions = new RegionCollection();
     }
 
     /**
@@ -39,27 +40,7 @@ class RegionService implements RegionServiceInterface
      */
     public function getProvinces()
     {
-        return new ArrayCollection($this->regions->first()->getChildren());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findByCode($code)
-    {
-        return $this->filter(function(AddressInterface $address) use ($code){
-            return $address->getCode() == $code;
-        })->first();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findByName($name)
-    {
-        return $this->filter(function(AddressInterface $address) use ($name){
-            return $address->getName() == $name;
-        })->first();
+        return $this->regions->first()->getChildren();
     }
 
     /**
@@ -89,7 +70,7 @@ class RegionService implements RegionServiceInterface
                 $addresses[] = $address;
             }
         });
-        return new ArrayCollection($addresses);
+        return new RegionCollection($addresses);
     }
 
     /**

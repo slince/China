@@ -9,6 +9,8 @@
  */
 namespace China\Region\Location;
 
+use China\Region\RegionCollectionInterface;
+
 interface AddressInterface extends \JsonSerializable
 {
     /**
@@ -55,7 +57,7 @@ interface AddressInterface extends \JsonSerializable
 
     /**
      * 获取子地区
-     * @return AddressInterface[]
+     * @return RegionCollectionInterface|AddressInterface[]
      */
     public function getChildren();
 

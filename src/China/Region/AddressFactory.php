@@ -48,7 +48,7 @@ final class AddressFactory
             $children = array_map(function($regionData) use ($address){
                 return static::createFromArray($regionData, $address);
             }, $data['children']);
-            $address->setChildren($children);
+            $address->setChildren(new RegionCollection($children));
         }
         return $address;
     }

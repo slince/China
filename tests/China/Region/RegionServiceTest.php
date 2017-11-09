@@ -45,4 +45,12 @@ class RegionServiceTest extends TestCase
         $this->assertEquals($regionService->findByName('蚌埠市'), $address->getParent());
         $this->assertEquals($regionService->findByName('安徽省'), $address->getParent()->getParent());
     }
+
+    public function testFindChain()
+    {
+        $regionService = $this->getChina()->getRegion();
+        $anhui = $regionService->findByName('安徽省');
+        $this->assertCount(16, $anhui->getChildren());
+        $this->assertEquals($anhui, $anhui->getChildren()->first()->getParent());
+    }
 }
