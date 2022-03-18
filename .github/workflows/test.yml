@@ -33,7 +33,7 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
-      run: ./vendor/phpunit
+      run: ./vendor/bin/phpunit
       
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
