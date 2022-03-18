@@ -24,7 +24,7 @@ use China\Region\RegionService;
 use China\Region\RegionServiceInterface;
 use Slince\Di\Container;
 
-class China
+final class China
 {
     /**
      * @var string
@@ -46,11 +46,17 @@ class China
      */
     protected $languages = ['zh_CN', 'zh_TW'];
 
+    /**
+     * @var string
+     */
+    protected $resourceDir;
+
     protected $container;
 
-    public function __construct()
+    public function __construct(string $resourceDir = RESOURCE_DIR)
     {
         $this->container = new Container();
+        $this->resourceDir = $resourceDir;
         $this->registerParameters();
         $this->registerService();
     }
@@ -66,45 +72,15 @@ class China
 
     protected function registerService()
     {
-        $this->container->set('holiday', function(Container $container){
+        $this->container->register('holiday', function(Container $container){
             return new HolidayService(new ResourceFile($container->getParameter('resource.file.holidays')));
         });
-        $this->container->set('nationality', function(Container $container){
+        $this->container->register('nationality', function(Container $container){
             return new NationalityService(new ResourceFile($container->getParameter('resource.file.nationalities')));
         });
-        $this->container->set('region', function(Container $container){
+        $this->container->register('region', function(Container $container){
             return new RegionService(new ResourceFile($container->getParameter('resource.file.regions')));
         });
-    }
-
-    /**
-     * 获取Holiday服务
-     *
-     * @return HolidayServiceInterface
-     */
-    public function getHoliday()
-    {
-        return $this->container->get('holiday');
-    }
-
-    /**
-     * 获取Nationality服务
-     *
-     * @return NationalityServiceInterface
-     */
-    public function getNationality()
-    {
-        return $this->container->get('nationality');
-    }
-
-    /**
-     * 获取Region服务
-     *
-     * @return RegionServiceInterface
-     */
-    public function getRegion()
-    {
-        return $this->container->get('region');
     }
 
     /**
@@ -112,7 +88,7 @@ class China
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -122,7 +98,7 @@ class China
      *
      * @return string
      */
-    public function getOfficialName()
+    public function getOfficialName(): string
     {
         return $this->officialName;
     }
@@ -132,7 +108,7 @@ class China
      *
      * @return string
      */
-    public function getIsoCode()
+    public function getIsoCode(): string
     {
         return $this->isoCode;
     }
@@ -142,8 +118,38 @@ class China
      *
      * @return array
      */
-    public function getLanguages()
+    public function getLanguages(): array
     {
         return $this->languages;
+    }
+
+    /**
+     * 获取Holiday服务
+     *
+     * @return HolidayServiceInterface
+     */
+    public function getHoliday(): HolidayServiceInterface
+    {
+        return $this->container->get('holiday');
+    }
+
+    /**
+     * 获取Nationality服务
+     *
+     * @return NationalityServiceInterface
+     */
+    public function getNationality(): NationalityServiceInterface
+    {
+        return $this->container->get('nationality');
+    }
+
+    /**
+     * 获取Region服务
+     *
+     * @return RegionServiceInterface
+     */
+    public function getRegion(): RegionServiceInterface
+    {
+        return $this->container->get('region');
     }
 }

@@ -19,29 +19,20 @@ use Doctrine\Common\Collections\Collection;
 interface RegionCollectionInterface extends Collection
 {
     /**
-     * 筛选地区.
-     *
-     * @param \Closure $callback
-     *
-     * @return AddressInterface[]|RegionCollectionInterface
-     */
-    public function filter(\Closure $callback);
-
-    /**
      * 根据Code查找地址
      *
      * @param string $code
      *
-     * @return AddressInterface|false
+     * @return AddressInterface|null
      */
-    public function findByCode($code);
+    public function findByCode(string $code): ?AddressInterface;
 
     /**
      * 根据Name查找地址
      *
      * @param string $name
      *
-     * @return AddressInterface|false
+     * @return AddressInterface|null
      */
-    public function findByName($name);
+    public function findByName(string $name): ?AddressInterface;
 }

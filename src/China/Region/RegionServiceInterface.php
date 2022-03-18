@@ -25,16 +25,16 @@ interface RegionServiceInterface
      *
      * @return Province[]|Collection
      */
-    public function getProvinces();
+    public function getProvinces(): iterable;
 
     /**
      * 查找身份证号码归属地.
      *
      * @param string|IDCardInterface $idCard
      *
-     * @return AddressInterface|false
+     * @return AddressInterface|null
      */
-    public function findByIdCard($idCard);
+    public function findByIdCard($idCard): ?AddressInterface;
 
     /**
      * 筛选地区.
@@ -43,23 +43,23 @@ interface RegionServiceInterface
      *
      * @return AddressInterface[]|RegionCollectionInterface
      */
-    public function filter(\Closure $callback);
+    public function filter(\Closure $callback): iterable;
 
     /**
      * 根据Code查找地址
      *
      * @param string $code
      *
-     * @return AddressInterface|false
+     * @return AddressInterface|null
      */
-    public function findByCode($code);
+    public function findByCode(string $code): ?AddressInterface;
 
     /**
      * 根据Name查找地址
      *
      * @param string $name
      *
-     * @return AddressInterface|false
+     * @return AddressInterface|null
      */
-    public function findByName($name);
+    public function findByName(string $name): ?AddressInterface;
 }

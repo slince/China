@@ -33,7 +33,7 @@ class LazyLoader extends AbstractLazyCollection implements ResourceLoaderInterfa
     /**
      * {@inheritdoc}
      */
-    public function getResourceFile()
+    public function getResourceFile(): ResourceFile
     {
         return $this->resourceFile;
     }
@@ -43,15 +43,24 @@ class LazyLoader extends AbstractLazyCollection implements ResourceLoaderInterfa
      */
     public function doInitialize()
     {
-        $rawData = (new Config($this->resourceFile->getPathname()))->toArray();
-        $this->collection = new ArrayCollection($this->handleRawData($rawData));
+        $data = (new Config($this->resourceFile->getPathname()))->toArray();
+        $this->collection = new ArrayCollection($this->createRecords($data));
+    }
+
+    protected function createRecords(array $records): array
+    {
+        $processed = [];
+        foreach ($records as $record) {
+            $processed[] = $this->handleRawData($record);
+        }
+        return $processed;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handleRawData($data)
+    public function handleRawData(array $record)
     {
-        return $data;
+        return $record;
     }
 }

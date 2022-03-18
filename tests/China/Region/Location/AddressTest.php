@@ -2,7 +2,7 @@
 
 namespace China\Tests\Region\Location;
 
-use China\Region\Location\Area;
+use China\Region\Location\District;
 use China\Region\Location\City;
 use China\Region\Location\Province;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,7 @@ class AddressTest extends TestCase
         $this->assertEquals('蚌埠市', $city->getName());
         $this->assertEquals($province, $city->getParent());
 
-        $area = new Area('340322', '五河县', $city);
+        $area = new District('340322', '五河县', $city);
         $this->assertEquals(340322, $area->getCode());
         $this->assertEquals('五河县', $area->getName());
         $this->assertEquals($city, $area->getParent());

@@ -23,14 +23,13 @@ interface ResourceLoaderInterface extends Collection
      *
      * @return ResourceFile
      */
-    public function getResourceFile();
+    public function getResourceFile(): ResourceFile;
 
     /**
      * 处理原生数据.
      *
-     * @param mixed $data
-     *
-     * @return array
+     * @param array $record
+     * @return array|object
      */
-    public function handleRawData($data);
+    public function handleRawData(array $record);
 }

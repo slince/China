@@ -37,7 +37,7 @@ trait FilesystemAwareTrait
      *
      * @return Filesystem
      */
-    public function getFilesystem()
+    public function getFilesystem(): Filesystem
     {
         return $this->filesystem;
     }

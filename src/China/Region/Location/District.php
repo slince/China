@@ -13,6 +13,13 @@ declare(strict_types=1);
 
 namespace China\Region\Location;
 
-class Street extends Address
+class District extends Address
 {
+    /**
+     * {@inheritdoc}
+     */
+    public static function getType(): string
+    {
+        return AddressInterface::TYPE_DISTRICT;
+    }
 }

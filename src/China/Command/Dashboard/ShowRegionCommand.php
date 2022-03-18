@@ -24,7 +24,7 @@ class ShowRegionCommand extends DashboardCommand
     protected static $types = [
         AddressInterface::TYPE_PROVINCE => '省',
         AddressInterface::TYPE_CITY => '市',
-        AddressInterface::TYPE_AREA => '区 ',
+        AddressInterface::TYPE_DISTRICT => '区 ',
     ];
 
     /**

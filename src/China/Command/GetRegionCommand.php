@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace China\Command;
 
 use China\Region\Location\AddressInterface;
-use China\Region\Location\Area;
+use China\Region\Location\District;
 use China\Region\Location\City;
 use China\Region\Location\Province;
 use Symfony\Component\Console\Input\InputInterface;
@@ -115,7 +115,7 @@ class GetRegionCommand extends CrawlCommand
                 $city->shortCode = substr($regionData['code'], 0, 4);
                 $cities[] = $city;
             } else {
-                $area = new Area($regionData['code'], $regionData['name']);
+                $area = new District($regionData['code'], $regionData['name']);
                 $area->parentCode = substr($regionData['code'], 0, 4);
                 $area->shortCode = $regionData['code'];
                 $areas[] = $area;

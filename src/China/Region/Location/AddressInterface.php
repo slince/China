@@ -36,47 +36,39 @@ interface AddressInterface extends \JsonSerializable
      *
      * @return string
      */
-    const TYPE_AREA = 'area';
+    const TYPE_DISTRICT = 'district';
 
     /**
      * 获取Code.
      *
      * @return string
      */
-    public function getCode();
+    public function getCode(): string;
 
     /**
      * 获取地址名称.
      *
      * @return string
      */
-    public function getName();
-
-    /**
-     * 设置父级地区.
-     *
-     * @param AddressInterface $parent
-     */
-    public function setParent(AddressInterface $parent);
+    public function getName(): string;
 
     /**
      * 获取上一级地址
      *
      * @return AddressInterface
      */
-    public function getParent();
+    public function getParent(): ?AddressInterface;
+
+    /**
+     * 设置子地区
+     * @param array $children
+     */
+    public function setChildren(array $children);
 
     /**
      * 获取子地区.
      *
      * @return RegionCollectionInterface|AddressInterface[]
      */
-    public function getChildren();
-
-    /**
-     * 设置子地区.
-     *
-     * @param $children
-     */
-    public function setChildren($children);
+    public function getChildren(): iterable;
 }

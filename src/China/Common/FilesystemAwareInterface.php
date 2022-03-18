@@ -22,5 +22,5 @@ interface FilesystemAwareInterface
      *
      * @return Filesystem
      */
-    public function getFilesystem();
+    public function getFilesystem(): Filesystem;
 }

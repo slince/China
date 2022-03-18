@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace China\Region\Location;
 
+use China\Region\RegionCollection;
 use Doctrine\Common\Collections\Collection;
 
 abstract class Address implements AddressInterface
@@ -39,33 +40,15 @@ abstract class Address implements AddressInterface
      */
     protected $children;
 
-    public function __construct($code, $name, AddressInterface $parent = null)
+    public function __construct(string $code, string $name, AddressInterface $parent = null, array $children = [])
     {
         $this->code = $code;
         $this->name = $name;
         $this->parent = $parent;
+        $this->children = $children;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
@@ -73,15 +56,23 @@ abstract class Address implements AddressInterface
     /**
      * {@inheritdoc}
      */
-    public function setParent(AddressInterface $parent)
+    public function getName(): string
     {
-        $this->parent = $parent;
+        return $this->name;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent(): ?AddressInterface
     {
         return $this->parent;
     }
@@ -97,7 +88,7 @@ abstract class Address implements AddressInterface
     /**
      * {@inheritdoc}
      */
-    public function getChildren()
+    public function getChildren(): iterable
     {
         return $this->children;
     }
@@ -117,11 +108,50 @@ abstract class Address implements AddressInterface
 
     /**
      * 获取当前类类型.
-     *
      * @return string
      */
-    public static function getType()
+    public static function getType(): string
     {
         return '';
+    }
+
+    /**
+     * 创建地区对象
+     *
+     * @param array            $data
+     * @param AddressInterface|null $parent
+     *
+     * @return AddressInterface
+     * @throws \InvalidArgumentException
+     */
+    public static function createFromArray(array $data, AddressInterface $parent = null)
+    {
+        if (!isset($data['type'])) {
+            throw new \InvalidArgumentException('Missing parameter "type"');
+        }
+        $address = null;
+        switch ($data['type']) {
+            case AddressInterface::TYPE_PROVINCE:
+                $address = new Province($data['code'], $data['name'], $parent);
+                break;
+            case AddressInterface::TYPE_CITY:
+                $address = new City($data['code'], $data['name'], $parent);
+                break;
+            case AddressInterface::TYPE_DISTRICT:
+                $address = new District($data['code'], $data['name'], $parent);
+                break;
+        }
+        if (!$address) {
+            throw new \InvalidArgumentException(sprintf('Bad parameter "type" with "%s"', $data['type']));
+        }
+        //子地区
+        if (isset($data['children'])) {
+            $children = array_map(function($regionData) use ($address){
+                return static::createFromArray($regionData, $address);
+            }, $data['children']);
+            $address->setChildren(new RegionCollection($children));
+        }
+
+        return $address;
     }
 }

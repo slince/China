@@ -21,6 +21,7 @@ use Doctrine\Common\Collections\Collection;
 class RegionService implements RegionServiceInterface
 {
     use AddressFinderTrait;
+
     /**
      * @var AddressInterface
      */
@@ -33,16 +34,16 @@ class RegionService implements RegionServiceInterface
      */
     protected $flattenRegions;
 
-    public function __construct(ResourceFile $resourceFile)
+    public function __construct(ResourceFile $file)
     {
-        $this->regions = new RegionLoader($resourceFile);
+        $this->regions = new RegionLoader($file);
         $this->flattenRegions = new RegionCollection();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getProvinces()
+    public function getProvinces(): iterable
     {
         return $this->regions->first()->getChildren();
     }
@@ -50,7 +51,7 @@ class RegionService implements RegionServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function findByIdCard($idCard)
+    public function findByIdCard($idCard): ?AddressInterface
     {
         if (is_string($idCard)) {
             $idCard = new IDCard($idCard);
@@ -63,7 +64,7 @@ class RegionService implements RegionServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function filter(\Closure $callback)
+    public function filter(\Closure $callback): iterable
     {
         if (!$this->flattenRegions->isEmpty()) {
             return $this->flattenRegions->filter($callback);
@@ -75,7 +76,6 @@ class RegionService implements RegionServiceInterface
                 $addresses[] = $address;
             }
         });
-
         return new RegionCollection($addresses);
     }
 

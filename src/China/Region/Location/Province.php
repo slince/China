@@ -18,7 +18,7 @@ class Province extends Address
     /**
      * {@inheritdoc}
      */
-    public static function getType()
+    public static function getType(): string
     {
         return AddressInterface::TYPE_PROVINCE;
     }

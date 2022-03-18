@@ -20,12 +20,9 @@ class HolidayLoader extends LazyLoader
     /**
      * {@inheritdoc}
      */
-    public function handleRawData($data)
+    public function handleRawData(array $record)
     {
-        return array_map(function($holidayData){
-            $date = explode('月', trim($holidayData['date'], '日'));
-
-            return new Holiday($holidayData['name'], $holidayData['type'], new Date($date[0], $date[1]));
-        }, $data);
+        $date = explode('月', trim($record['date'], '日'));
+        return new Holiday($record['name'], $record['type'], new Date($date[0], $date[1]));
     }
 }

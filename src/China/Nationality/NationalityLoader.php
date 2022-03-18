@@ -20,10 +20,8 @@ class NationalityLoader extends LazyLoader
     /**
      * {@inheritdoc}
      */
-    public function handleRawData($data)
+    public function handleRawData($record)
     {
-        return array_map(function($data){
-            return new Nationality($data['name'], $data['pinyin'], $data['population']);
-        }, $data);
+        return new Nationality($record['name'], $record['pinyin'], $record['population']);
     }
 }

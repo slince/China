@@ -22,13 +22,14 @@ trait AddressFinderTrait
      *
      * @param string $code
      *
-     * @return AddressInterface|false
+     * @return AddressInterface|null
      */
-    public function findByCode($code)
+    public function findByCode(string $code): ?AddressInterface
     {
-        return $this->filter(function(AddressInterface $address) use ($code){
+        $result = $this->filter(function(AddressInterface $address) use ($code){
             return $address->getCode() == $code;
         })->first();
+        return $result ?: null;
     }
 
     /**
@@ -36,21 +37,13 @@ trait AddressFinderTrait
      *
      * @param string $name
      *
-     * @return AddressInterface|false
+     * @return AddressInterface|null
      */
-    public function findByName($name)
+    public function findByName(string $name): ?AddressInterface
     {
-        return $this->filter(function(AddressInterface $address) use ($name){
+        $result = $this->filter(function(AddressInterface $address) use ($name){
             return $address->getName() == $name;
         })->first();
+        return $result ?: null;
     }
-
-    /**
-     * 筛选.
-     *
-     * @param \Closure $callback
-     *
-     * @return mixed
-     */
-    abstract public function filter(\Closure $callback);
 }
