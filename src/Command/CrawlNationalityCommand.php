@@ -71,14 +71,13 @@ class CrawlNationalityCommand extends CrawlCommand
                     $data[$index - 1]['pinyin'] = trim($tdNode->text());
                 }
             });
-
             return $data;
         });
 
         return call_user_func_array('array_merge', $nationalities);
     }
 
-    protected function extractPopulationData(Crawler $crawler)
+    protected function extractPopulationData(Crawler $crawler): array
     {
         $data = [];
         $crawler->filter('tr')->each(function(Crawler $itemNode) use (&$data){
@@ -92,13 +91,13 @@ class CrawlNationalityCommand extends CrawlCommand
         return $data;
     }
 
-    protected function mergeData($nationalityInfos, $populations)
+    protected function mergeData($nationalityInfos, $populations): array
     {
         $nationalities = [];
         foreach ($nationalityInfos as $nationalityInfo) {
             $nationalities[] = new Nationality($nationalityInfo['name'],
                 $nationalityInfo['pinyin'],
-                isset($populations[$nationalityInfo['name']]) ? $populations[$nationalityInfo['name']] : 0
+                $populations[$nationalityInfo['name']] ?? 0
             );
         }
 

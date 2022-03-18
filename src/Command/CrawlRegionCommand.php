@@ -62,15 +62,15 @@ class CrawlRegionCommand extends CrawlCommand
             ];
         });
         //归类数据
-        list($provinces, $cities, $areas) = $this->organizeRegions($regions);
+        list($provinces, $cities, $districts) = $this->organizeRegions($regions);
         //构建树形结构
-        $root = new Province(0, null);
+        $root = new Province(0, "");
         $root->shortCode = 0;
-        $this->buildRegionsTree(array_merge($provinces, $cities, $areas), $root);
+        $this->buildRegionsTree(array_merge($provinces, $cities, $districts), $root);
 
         $this->filesystem->dumpFile($this->resourceDir.'/regions/provinces.json', \json_encode($this->extractAddressesWithoutChildren($provinces), JSON_UNESCAPED_UNICODE));
         $this->filesystem->dumpFile($this->resourceDir.'/regions/cities.json', \json_encode($this->extractAddressesWithoutChildren($cities), JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile($this->resourceDir.'/regions/districts.json', \json_encode($this->extractAddressesWithoutChildren($areas), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($this->resourceDir.'/regions/districts.json', \json_encode($this->extractAddressesWithoutChildren($districts), JSON_UNESCAPED_UNICODE));
         $this->filesystem->dumpFile($outputFile, \json_encode($root->getChildren(), JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
@@ -84,7 +84,7 @@ class CrawlRegionCommand extends CrawlCommand
      *
      * @return AddressInterface[]
      */
-    protected function extractAddressesWithoutChildren(array $addresses)
+    protected function extractAddressesWithoutChildren(array $addresses): array
     {
         return array_map(function(AddressInterface $address){
             $address = clone $address;
@@ -101,9 +101,9 @@ class CrawlRegionCommand extends CrawlCommand
      *
      * @return array
      */
-    protected function organizeRegions($regions)
+    protected function organizeRegions(array $regions): array
     {
-        $provinces = $cities = $areas = [];
+        $provinces = $cities = $districts = [];
         foreach ($regions as $regionData) {
             if (substr($regionData['code'], 2) === '0000') {
                 $province = new Province($regionData['code'], $regionData['name']);
@@ -119,14 +119,14 @@ class CrawlRegionCommand extends CrawlCommand
                 $area = new District($regionData['code'], $regionData['name']);
                 $area->parentCode = substr($regionData['code'], 0, 4);
                 $area->shortCode = $regionData['code'];
-                $areas[] = $area;
+                $districts[] = $area;
             }
         }
 
         return [
             $provinces,
             $cities,
-            $areas,
+            $districts,
         ];
     }
 
