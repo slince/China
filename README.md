@@ -19,7 +19,7 @@
 
 ## Document
 
-你可以在这里发现[文档](./resources/doc);
+你可以在这里发现[文档](./doc);
 
 ## Basic Usage
 
