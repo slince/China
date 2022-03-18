@@ -4,8 +4,8 @@
 
 我国的资料库查询库；本库主要包含民族、节日、地址库信息的查询；部分数据来源采集自百科以及国家统计局；欢迎收藏欢迎贡献代码；
 
-[![Build Status](https://img.shields.io/github/workflow/status/slince/China.js/ci?style=flat-square)](https://github.com/slince/China.js/actions)
-[![Coverage Status](https://img.shields.io/codecov/c/github/slince/China.js/master?style=flat-square)](https://codecov.io/github/slince/China.js)
+[![Build Status](https://img.shields.io/github/workflow/status/slince/China/test?style=flat-square)](https://github.com/slince/China/actions)
+[![Coverage Status](https://img.shields.io/codecov/c/github/slince/China/master?style=flat-square)](https://codecov.io/github/slince/China)
 [![Latest Stable Version](https://img.shields.io/packagist/v/slince/china.svg?style=flat-square&label=stable)](https://packagist.org/packages/slince/china)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/slince/China.svg?style=flat-square)](https://scrutinizer-ci.com/g/slince/China/?branch=master)
 
