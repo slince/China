@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DomCrawler\Crawler;
 
-class GetHolidayCommand extends CrawlCommand
+class CrawlHolidayCommand extends CrawlCommand
 {
     /**
      * 节假日资源地址
@@ -46,7 +46,7 @@ class GetHolidayCommand extends CrawlCommand
     {
         $style = new SymfonyStyle($input, $output);
 
-        $outputFile = static::RESOURCE_DIR.'/holidays.json';
+        $outputFile = $this->resourceDir.'/holidays.json';
 
         $crawler = $this->getClient()->request('GET', static::URL);
         $holidays = $crawler->filter('.festival_list')->each(function(Crawler $node){

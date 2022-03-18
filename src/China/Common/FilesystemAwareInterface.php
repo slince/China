@@ -23,4 +23,11 @@ interface FilesystemAwareInterface
      * @return Filesystem
      */
     public function getFilesystem(): Filesystem;
+
+    /**
+     * 设置文件系统
+     *
+     * @param Filesystem $filesystem
+     */
+    public function setFilesystem(Filesystem $filesystem);
 }

@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DomCrawler\Crawler;
 
-class GetNationalityCommand extends CrawlCommand
+class CrawlNationalityCommand extends CrawlCommand
 {
     /**
      * @var string
@@ -42,7 +42,7 @@ class GetNationalityCommand extends CrawlCommand
     {
         $style = new SymfonyStyle($input, $output);
 
-        $outputFile = static::RESOURCE_DIR.'/nationalities.json';
+        $outputFile = $this->resourceDir.'/nationalities.json';
 
         $crawler = $this->getClient()->request('GET', static::URL);
 

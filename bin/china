@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
+
 use China\Command\Application;
+
 foreach ([__DIR__ . '/../../../autoload.php'
      , __DIR__ . '/../vendor/autoload.php'] as $autoloadFile) {
     if (is_file($autoloadFile)) {
@@ -8,4 +10,4 @@ foreach ([__DIR__ . '/../../../autoload.php'
         break;
     }
 }
-(new Application())->run();
+(new Application(__DIR__.'/../resources/'))->run();

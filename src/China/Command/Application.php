@@ -13,27 +13,47 @@ declare(strict_types=1);
 
 namespace China\Command;
 
+use China\Common\FilesystemAwareInterface;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Filesystem\Filesystem;
 
-class Application extends BaseApplication
+final class Application extends BaseApplication
 {
-    public function __construct()
+    /**
+     * @var string
+     */
+    protected $resourceDir;
+
+    public function __construct(string $resourceDir)
     {
+        $this->resourceDir = $resourceDir;
         parent::__construct('China');
     }
 
-    public function getDefaultCommands()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultCommands(): array
     {
-        $filesystem = new Filesystem();
+        return array_merge(parent::getDefaultCommands(), $this->createCommands());
+    }
 
-        return array_merge(parent::getDefaultCommands(), [
-            new GetHolidayCommand($filesystem),
-            new GetNationalityCommand($filesystem),
-            new GetRegionCommand($filesystem),
-            new Dashboard\ShowHolidayCommand(),
-            new Dashboard\ShowNationalityCommand(),
-            new Dashboard\ShowRegionCommand(),
-        ]);
+    protected function createCommands(): array
+    {
+        $commands = [
+            new CrawlHolidayCommand($this->resourceDir),
+            new CrawlNationalityCommand($this->resourceDir),
+            new CrawlRegionCommand($this->resourceDir),
+            new ShowHolidayCommand(),
+            new ShowNationalityCommand(),
+            new ShowRegionCommand(),
+        ];
+        $filesystem = new Filesystem();
+        foreach ($commands as $command) {
+            if ($command instanceof FilesystemAwareInterface) {
+                $command->setFilesystem($filesystem);
+            }
+        }
+        return $commands;
     }
 }

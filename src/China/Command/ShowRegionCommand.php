@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace China\Command\Dashboard;
+namespace China\Command;
 
 use China\Region\Location\AddressInterface;
 use Symfony\Component\Console\Input\InputInterface;

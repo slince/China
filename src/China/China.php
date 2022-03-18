@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace China;
 
-define('RESOURCE_DIR', __DIR__.'/../../resources/');
-
 use China\Common\ResourceFile;
 use China\Holiday\HolidayService;
 use China\Holiday\HolidayServiceInterface;
@@ -53,7 +51,7 @@ final class China
 
     protected $container;
 
-    public function __construct(string $resourceDir = RESOURCE_DIR)
+    public function __construct(string $resourceDir = __DIR__.'/../../resources/')
     {
         $this->container = new Container();
         $this->resourceDir = $resourceDir;

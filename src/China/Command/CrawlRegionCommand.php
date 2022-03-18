@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace China\Command;
 
+use China\Common\Utils;
 use China\Region\Location\AddressInterface;
 use China\Region\Location\District;
 use China\Region\Location\City;
@@ -22,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DomCrawler\Crawler;
 
-class GetRegionCommand extends CrawlCommand
+class CrawlRegionCommand extends CrawlCommand
 {
     /**
      * 资源地址
@@ -47,18 +48,17 @@ class GetRegionCommand extends CrawlCommand
     {
         $style = new SymfonyStyle($input, $output);
 
-        $outputFile = static::RESOURCE_DIR.'/regions/regions.json';
+        $outputFile = $this->resourceDir.'/regions/regions.json';
 
         $crawler = $this->getClient()->request('GET', static::URL);
 
-        $provinces = $cities = $areas = [];
         $regions = $crawler->filter('p.MsoNormal')->each(function(Crawler $node) use (&$provinces, &$cities, &$areas){
             $code = $node->filter('span[lang="EN-US"]')->text();
             $name = $node->filter('span[style]')->last()->text();
 
             return [
                 'code' => preg_replace('/[^\d]/', '', $code),
-                'name' => $this->clearBlankCharacters($name),
+                'name' => Utils::clearBlankCharacters($name),
             ];
         });
         //归类数据
@@ -68,10 +68,10 @@ class GetRegionCommand extends CrawlCommand
         $root->shortCode = 0;
         $this->buildRegionsTree(array_merge($provinces, $cities, $areas), $root);
 
-        $this->filesystem->dumpFile(static::RESOURCE_DIR.'/regions/provinces.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($provinces), JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile(static::RESOURCE_DIR.'/regions/cities.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($cities), JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile(static::RESOURCE_DIR.'/regions/areas.json', \GuzzleHttp\json_encode($this->extractAddressesWithoutChildren($areas), JSON_UNESCAPED_UNICODE));
-        $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($root->getChildren(), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($this->resourceDir.'/regions/provinces.json', \json_encode($this->extractAddressesWithoutChildren($provinces), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($this->resourceDir.'/regions/cities.json', \json_encode($this->extractAddressesWithoutChildren($cities), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($this->resourceDir.'/regions/districts.json', \json_encode($this->extractAddressesWithoutChildren($areas), JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($outputFile, \json_encode($root->getChildren(), JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
     }

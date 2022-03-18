@@ -16,62 +16,37 @@ namespace China\Command;
 use China\Common\FilesystemAwareInterface;
 use China\Common\FilesystemAwareTrait;
 use Goutte\Client;
-use GuzzleHttp\Client as GuzzleClient;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Filesystem\Filesystem;
 
-class CrawlCommand extends Command implements CrawlerAwareInterface, FilesystemAwareInterface
+class CrawlCommand extends Command implements FilesystemAwareInterface
 {
     use FilesystemAwareTrait;
 
     /**
-     * @var Client
-     */
-    protected static $client;
-
-    /**
-     * 资源目录.
-     *
      * @var string
      */
-    const RESOURCE_DIR = __DIR__.'/../../../resources/';
+    protected $resourceDir;
 
-    public function __construct(Filesystem $filesystem)
+    /**
+     * @var Client
+     */
+    protected $client;
+
+    public function __construct(string $resourceDir)
     {
-        $this->filesystem = $filesystem;
-        parent::__construct(null);
+        $this->resourceDir = $resourceDir;
+        parent::__construct();
     }
 
     /**
-     * {@inheritdoc}
+     * Goutte 实例
+     * @return Client
      */
-    public function getClient()
+    public function getClient(): Client
     {
-        if (static::$client) {
-            return static::$client;
+        if ($this->client) {
+            return $this->client;
         }
-        static::$client = new Client();
-        $guzzleClient = new GuzzleClient([
-            'timeout' => 5,
-            'verify' => false,
-        ]);
-        static::$client->setClient($guzzleClient);
-
-        return static::$client;
-    }
-
-    /**
-     * 去除空白字符.
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    public static function clearBlankCharacters($string)
-    {
-        $handledString = preg_replace('/\s/', '', str_replace('&nbsp;', '', $string));
-        $handledString = str_replace('　', '', $handledString);
-
-        return trim($handledString);
+        return $this->client = new Client();
     }
 }

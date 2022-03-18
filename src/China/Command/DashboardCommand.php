@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace China\Command\Dashboard;
+namespace China\Command;
 
 use China\China;
 use Symfony\Component\Console\Command\Command;
@@ -28,12 +28,11 @@ class DashboardCommand extends Command
      *
      * @return China
      */
-    protected function getChina()
+    protected function getChina(): China
     {
-        if (is_null($this->china)) {
+        if (null === $this->china) {
             $this->china = new China();
         }
-
         return $this->china;
     }
 }
