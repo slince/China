@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -15,13 +18,13 @@ class IDCard implements IDCardInterface
     /**
      * 身份证数字.
      *
-     * @var number
+     * @var string
      */
     protected $id;
 
-    public function __construct($id)
+    public function __construct(string $id)
     {
-        static::assertValidIDCard($id);
+        self::assertValidIDCard($id);
         $this->id = $id;
     }
 
@@ -36,7 +39,7 @@ class IDCard implements IDCardInterface
     /**
      * {@inheritdoc}
      */
-    public function isShortLength()
+    public function isShortLength(): bool
     {
         return strlen($this->id) === 15;
     }
@@ -44,7 +47,7 @@ class IDCard implements IDCardInterface
     /**
      * {@inheritdoc}
      */
-    public function getLongNumber()
+    public function getLongNumber(): string
     {
         $id = $this->id;
         if ($this->isShortLength()) {
@@ -59,7 +62,7 @@ class IDCard implements IDCardInterface
      *
      * @param string $id
      */
-    public static function assertValidIDCard($id)
+    public static function assertValidIDCard(string $id)
     {
         if (!is_numeric($id)) {
             throw new \InvalidArgumentException(sprintf('The id "%s" card contains the non-numeric characters', $id));

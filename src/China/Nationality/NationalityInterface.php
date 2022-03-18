@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -12,9 +15,21 @@ namespace China\Nationality;
 
 interface NationalityInterface extends \JsonSerializable
 {
-    public function getName();
+    /**
+     * 民族名称
+     * @return string
+     */
+    public function getName(): string;
 
-    public function getPinyin();
+    /**
+     * 民族拼音
+     * @return string
+     */
+    public function getPinyin(): string;
 
-    public function getPopulation();
+    /**
+     * 人口数量
+     * @return int
+     */
+    public function getPopulation(): int;
 }

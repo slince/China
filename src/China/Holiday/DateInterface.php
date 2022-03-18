@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -17,39 +20,21 @@ interface DateInterface extends \JsonSerializable
      *
      * @return int
      */
-    public function getDay();
+    public function getDay(): int;
 
     /**
      * 获取month.
      *
      * @return int
      */
-    public function getMonth();
-
-    /**
-     * 设置天.
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @param int $day
-     */
-    public function setDay($day);
-
-    /**
-     * 设置月份.
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @param int $month
-     */
-    public function setMonth($month);
+    public function getMonth(): int;
 
     /**
      * 转换成字符串表达式.
      *
      * @return string
      */
-    public function toString();
+    public function toString(): string;
 
     /**
      * 格式化输出日期
@@ -58,5 +43,5 @@ interface DateInterface extends \JsonSerializable
      *
      * @return string
      */
-    public function format($format);
+    public function format(string $format): string;
 }

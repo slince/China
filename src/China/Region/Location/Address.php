@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *

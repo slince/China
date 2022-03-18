@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -24,12 +27,12 @@ interface IDCardInterface
      *
      * @return boolean
      */
-    public function isShortLength();
+    public function isShortLength(): bool;
 
     /**
      * 获取长数字.
      *
-     * @return number
+     * @return string
      */
-    public function getLongNumber();
+    public function getLongNumber(): string;
 }

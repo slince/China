@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -10,7 +13,7 @@
 
 namespace China\Holiday;
 
-class Holiday implements HolidayInterface
+final class Holiday implements HolidayInterface
 {
     /**
      * @var string
@@ -22,12 +25,9 @@ class Holiday implements HolidayInterface
      */
     protected $type;
 
-    /**
-     * {@inheritdoc}
-     */
     protected $date;
 
-    public function __construct($name, $type, DateInterface $date)
+    public function __construct(string $name, string $type, DateInterface $date)
     {
         $this->name = $name;
         $this->type = $type;
@@ -37,7 +37,7 @@ class Holiday implements HolidayInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -45,7 +45,7 @@ class Holiday implements HolidayInterface
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -53,7 +53,7 @@ class Holiday implements HolidayInterface
     /**
      * {@inheritdoc}
      */
-    public function getDate()
+    public function getDate(): DateInterface
     {
         return $this->date;
     }

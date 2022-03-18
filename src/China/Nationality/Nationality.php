@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -10,7 +13,7 @@
 
 namespace China\Nationality;
 
-class Nationality implements NationalityInterface
+final class Nationality implements NationalityInterface
 {
     /**
      * @var string
@@ -27,7 +30,7 @@ class Nationality implements NationalityInterface
      */
     protected $population;
 
-    public function __construct($name, $pinyin, $population)
+    public function __construct(string $name, string $pinyin, int $population)
     {
         $this->name = $name;
         $this->pinyin = $pinyin;
@@ -37,7 +40,7 @@ class Nationality implements NationalityInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -45,7 +48,7 @@ class Nationality implements NationalityInterface
     /**
      * {@inheritdoc}
      */
-    public function getPinyin()
+    public function getPinyin(): string
     {
         return $this->pinyin;
     }
@@ -53,7 +56,7 @@ class Nationality implements NationalityInterface
     /**
      * {@inheritdoc}
      */
-    public function getPopulation()
+    public function getPopulation(): int
     {
         return $this->population;
     }

@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -38,19 +41,19 @@ interface HolidayInterface extends \JsonSerializable
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * 获取类型.
      *
      * @return string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * 获取日期
      *
      * @return DateInterface
      */
-    public function getDate();
+    public function getDate(): DateInterface;
 }

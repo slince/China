@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -28,7 +31,7 @@ class HolidayService implements HolidayServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function findAll()
+    public function findAll(): iterable
     {
         return $this->holidays;
     }
@@ -36,7 +39,7 @@ class HolidayService implements HolidayServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function findTraditionalHolidays()
+    public function findTraditionalHolidays(): iterable
     {
         return $this->findHolidaysByType(HolidayInterface::TYPE_TRADITIONAL);
     }
@@ -44,7 +47,7 @@ class HolidayService implements HolidayServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function findInternationalHolidays()
+    public function findInternationalHolidays(): iterable
     {
         return $this->findHolidaysByType(HolidayInterface::TYPE_INTERNATIONAL);
     }
@@ -52,7 +55,7 @@ class HolidayService implements HolidayServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function findSolarTermHolidays()
+    public function findSolarTermHolidays(): iterable
     {
         return $this->findHolidaysByType(HolidayInterface::TYPE_SOLAR_TERM);
     }
@@ -60,7 +63,7 @@ class HolidayService implements HolidayServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function findHolidaysByType($type)
+    public function findHolidaysByType(string $type): iterable
     {
         return $this->holidays->filter(function(HolidayInterface $holiday) use ($type){
             return $holiday->getType() === $type;
@@ -70,10 +73,11 @@ class HolidayService implements HolidayServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function find($name)
+    public function find(string $name): ?HolidayInterface
     {
-        return $this->holidays->filter(function(HolidayInterface $holiday) use ($name){
+        $result = $this->holidays->filter(function(HolidayInterface $holiday) use ($name){
             return $holiday->getName() === $name;
         })->first();
+        return $result ?: null;
     }
 }

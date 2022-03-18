@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -19,13 +22,13 @@ final class IDCardUtils
     /**
      * 计算身份证最后一位.
      *
-     * @param string $IDCardBody
+     * @param string $idCardBody
      *
-     * @return bool|number
+     * @return bool|string
      */
-    public static function calcIDCardCode($IDCardBody)
+    public static function calcIDCardCode(string $idCardBody)
     {
-        if (strlen($IDCardBody) != 17) {
+        if (strlen($idCardBody) != 17) {
             return false;
         }
         //加权因子
@@ -34,8 +37,8 @@ final class IDCardUtils
         $code = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
         $checksum = 0;
 
-        for ($i = 0; $i < strlen($IDCardBody); ++$i) {
-            $checksum += substr($IDCardBody, $i, 1) * $factor[$i];
+        for ($i = 0; $i < strlen($idCardBody); ++$i) {
+            $checksum += substr($idCardBody, $i, 1) * $factor[$i];
         }
 
         return $code[$checksum % 11];
@@ -44,11 +47,11 @@ final class IDCardUtils
     /**
      * 将15位身份证升级到18位.
      *
-     * @param number $id
+     * @param string $id
      *
      * @return bool|string
      */
-    public static function convertIDCard15to18($id)
+    public static function convertIDCard15to18(string $id)
     {
         if (strlen($id) != 15) {
             return false;
@@ -61,27 +64,24 @@ final class IDCardUtils
             }
         }
 
-        return $id.static::calcIDCardCode($id);
+        return $id . self::calcIDCardCode($id);
     }
 
     /**
      * 18位身份证校验码有效性检查.
      *
-     * @param number $IDCard
+     * @param string $idCard
      *
      * @return bool
      */
-    public static function check18IDCard($IDCard)
+    public static function check18IDCard(string $idCard): bool
     {
-        if (strlen($IDCard) != 18) {
+        if (strlen($idCard) != 18) {
             return false;
         }
-        $IDCardBody = substr($IDCard, 0, 17); //身份证主体
-        $IDCardCode = strtoupper(substr($IDCard, 17, 1)); //身份证最后一位的验证码
-        if (static::calcIDCardCode($IDCardBody) != $IDCardCode) {
-            return false;
-        } else {
-            return true;
-        }
+        $idCardBody = substr($idCard, 0, 17); //身份证主体
+        $idCardCode = strtoupper(substr($idCard, 17, 1)); //身份证最后一位的验证码
+
+        return self::calcIDCardCode($idCardBody) == $idCardCode;
     }
 }

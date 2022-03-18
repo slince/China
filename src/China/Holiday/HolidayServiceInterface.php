@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -19,28 +22,28 @@ interface HolidayServiceInterface
      *
      * @return HolidayInterface[]|Collection
      */
-    public function findAll();
+    public function findAll(): iterable;
 
     /**
      * 获取所有的传统节日.
      *
      * @return HolidayInterface[]|Collection
      */
-    public function findTraditionalHolidays();
+    public function findTraditionalHolidays(): iterable;
 
     /**
      * 获取所有的国际节日.
      *
      * @return HolidayInterface[]|Collection
      */
-    public function findInternationalHolidays();
+    public function findInternationalHolidays(): iterable;
 
     /**
      * 获取所有的节气.
      *
      * @return HolidayInterface[]|Collection
      */
-    public function findSolarTermHolidays();
+    public function findSolarTermHolidays(): iterable;
 
     /**
      * 根据类型获取节假日.
@@ -49,7 +52,7 @@ interface HolidayServiceInterface
      *
      * @return HolidayInterface[]|Collection
      */
-    public function findHolidaysByType($type);
+    public function findHolidaysByType(string $type): iterable;
 
     /**
      * 查找指定的民族.
@@ -58,5 +61,5 @@ interface HolidayServiceInterface
      *
      * @return HolidayInterface
      */
-    public function find($name);
+    public function find(string $name): ?HolidayInterface;
 }

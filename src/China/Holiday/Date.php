@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the Slince/China package.
+ * This file is part of the slince/china package.
  *
  * (c) Slince <taosikai@yeah.net>
  *
@@ -10,15 +13,8 @@
 
 namespace China\Holiday;
 
-class Date implements DateInterface
+final class Date implements DateInterface
 {
-    /**
-     * 天.
-     *
-     * @var int
-     */
-    protected $day;
-
     /**
      * 月.
      *
@@ -26,16 +22,23 @@ class Date implements DateInterface
      */
     protected $month;
 
-    public function __construct($month, $day)
+    /**
+     * 天.
+     *
+     * @var int
+     */
+    protected $day;
+
+    public function __construct(int $month, int $day)
     {
-        $this->month = $month;
-        $this->day = $day;
+        $this->setMonth($month);
+        $this->setDay($day);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDay()
+    public function getDay(): int
     {
         return $this->day;
     }
@@ -43,7 +46,7 @@ class Date implements DateInterface
     /**
      * {@inheritdoc}
      */
-    public function getMonth()
+    public function getMonth(): int
     {
         return $this->month;
     }
@@ -51,34 +54,9 @@ class Date implements DateInterface
     /**
      * {@inheritdoc}
      */
-    public function setMonth($month)
+    public function format(string $format): string
     {
-        if (!is_numeric($month) || $month < 1 && $month > 12) {
-            throw new \InvalidArgumentException(sprintf('Wrong month, given "%s"', $month));
-        }
-        $this->month = $month;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setDay($day)
-    {
-        if (!is_numeric($day) || $day < 1 && $day > 31) {
-            throw new \InvalidArgumentException(sprintf('Wrong day, given "%s"', $day));
-        }
-        $this->day = $day;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function format($format)
-    {
-        return str_replace([
-            '{month}',
-            '{day}',
-        ], [
+        return str_replace(['{month}', '{day}',], [
             $this->month,
             $this->day,
         ], $format);
@@ -87,7 +65,7 @@ class Date implements DateInterface
     /**
      * {@inheritdoc}
      */
-    public function toString()
+    public function toString(): string
     {
         return $this->format('{month}月{day}日');
     }
@@ -108,5 +86,21 @@ class Date implements DateInterface
     public function jsonSerialize()
     {
         return $this->toString();
+    }
+
+    protected function setMonth(int $month)
+    {
+        if (!is_numeric($month) || $month < 1 || $month > 12) {
+            throw new \InvalidArgumentException(sprintf('Wrong month, given "%s"', $month));
+        }
+        $this->month = $month;
+    }
+
+    protected function setDay($day)
+    {
+        if (!is_numeric($day) || $day < 1 || $day > 31) {
+            throw new \InvalidArgumentException(sprintf('Wrong day, given "%s"', $day));
+        }
+        $this->day = $day;
     }
 }
