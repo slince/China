@@ -24,12 +24,12 @@
     },
     "autoload":{
         "psr-4": {
-            "China\\": "src/China/"
+            "China\\": "src/"
         }
     },
     "autoload-dev":{
         "psr-4": {
-            "China\\Tests\\": "tests/China/"
+            "China\\Tests\\": "tests/"
         }
     },
     "bin": [
