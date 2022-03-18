@@ -51,7 +51,7 @@ final class China
 
     protected $container;
 
-    public function __construct(string $resourceDir = __DIR__.'/../../resources/')
+    public function __construct(string $resourceDir = __DIR__.'/../resources/')
     {
         $this->container = new Container();
         $this->resourceDir = $resourceDir;
