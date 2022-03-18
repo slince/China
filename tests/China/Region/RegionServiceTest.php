@@ -31,7 +31,7 @@ class RegionServiceTest extends TestCase
     public function testFind()
     {
         $regionService = $this->getChina()->getRegion();
-        $this->assertFalse($regionService->findByName('不存在的地区'));
+        $this->assertNull($regionService->findByName('不存在的地区'));
         $bengbu = $regionService->findByName('蚌埠市');
         $this->assertEquals($regionService->findByName('安徽省'), $bengbu->getParent());
         $this->assertContains($regionService->findByName('怀远县'), $bengbu->getChildren());

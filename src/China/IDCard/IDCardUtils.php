@@ -58,9 +58,9 @@ final class IDCardUtils
         } else {
             // 如果身份证顺序码是996 997 998 999，这些是为百岁以上老人的特殊编码
             if (array_search(substr($id, 12, 3), array('996', '997', '998', '999')) !== false) {
-                $IDCard = substr($id, 0, 6).'18'.substr($id, 6, 9);
+                $id = substr($id, 0, 6).'18'.substr($id, 6, 9);
             } else {
-                $IDCard = substr($id, 0, 6).'19'.substr($id, 6, 9);
+                $id = substr($id, 0, 6).'19'.substr($id, 6, 9);
             }
         }
 
@@ -82,6 +82,6 @@ final class IDCardUtils
         $idCardBody = substr($idCard, 0, 17); //身份证主体
         $idCardCode = strtoupper(substr($idCard, 17, 1)); //身份证最后一位的验证码
 
-        return self::calcIDCardCode($idCardBody) == $idCardCode;
+        return self::calcIDCardCode($idCardBody) === $idCardCode;
     }
 }

@@ -21,15 +21,11 @@ Available commands:
   crawl:holiday          采集节假日数据
   crawl:nationality      从百度百科采集民族信息
   crawl:region           从国家统计局采集地区信息
- dashboard
-  dashboard:holiday      展示节假日信息
-  dashboard:nationality  展示民族数据信息
-  dashboard:region       展示我国省市县信息
+ view
+  view:holiday      展示节假日信息
+  view:nationality  展示民族数据信息
+  view:region       展示我国省市县信息
 ```
-
-## 资源推荐
-
-- [PHPDish社区](https://www.phpdish.com)
 
 ## TODO
 ...

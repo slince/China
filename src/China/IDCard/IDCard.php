@@ -64,9 +64,6 @@ class IDCard implements IDCardInterface
      */
     public static function assertValidIDCard(string $id)
     {
-        if (!is_numeric($id)) {
-            throw new \InvalidArgumentException(sprintf('The id "%s" card contains the non-numeric characters', $id));
-        }
         $length = strlen($id);
         if ($length !== 15 && $length !== 18) {
             throw new \InvalidArgumentException(sprintf('The id "%s" card length should be 15 numbers or 18 numbers, given %d', $id, $length));

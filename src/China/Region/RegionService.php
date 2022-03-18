@@ -56,7 +56,7 @@ class RegionService implements RegionServiceInterface
         if (is_string($idCard)) {
             $idCard = new IDCard($idCard);
         }
-        $areaCode = substr($idCard, 0, 6);
+        $areaCode = substr((string)$idCard, 0, 6);
 
         return $this->findByCode($areaCode);
     }

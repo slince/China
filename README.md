@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://raw.githubusercontent.com/slince/china/master/resources/china.png" alt="中国">
+   <img src="https://raw.githubusercontent.com/slince/china/master/etc/china.png" alt="中国">
 </p>
 
 我国的资料库查询库；本库主要包含民族、节日、地址库信息的查询；部分数据来源采集自百科以及国家统计局；欢迎收藏欢迎贡献代码；
@@ -132,10 +132,10 @@ Available commands:
   crawl:holiday          采集节假日数据
   crawl:nationality      从百度百科采集民族信息
   crawl:region           从国家统计局采集地区信息
- dashboard
-  dashboard:holiday      展示节假日信息
-  dashboard:nationality  展示民族数据信息
-  dashboard:region       展示我国省市县信息
+ view
+  view:holiday      展示节假日信息
+  view:nationality  展示民族数据信息
+  view:region       展示我国省市县信息
 ```
 
 例: 展示我国所有的省、直辖市、自治区以及特别行政区：

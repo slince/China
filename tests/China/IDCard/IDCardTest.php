@@ -21,21 +21,21 @@ class IDCardTest extends TestCase
             $idCard = new IDCard('340321199212026973');
             $this->fail();
         } catch (\Exception $exception) {
-            $this->assertContains('invalid', $exception->getMessage());
+            $this->assertStringContainsString('invalid', $exception->getMessage());
         }
 
         try {
             $idCard = new IDCard('qwe340321199212026973');
             $this->fail();
         } catch (\Exception $exception) {
-            $this->assertContains('non-numeric', $exception->getMessage());
+            $this->assertStringContainsString('length should be 15 numbers or 18 numbers', $exception->getMessage());
         }
 
         try {
             $idCard = new IDCard('34032119921202697');
             $this->fail();
         } catch (\Exception $exception) {
-            $this->assertContains('card length should be 15 numbers or 18 numbers', $exception->getMessage());
+            $this->assertStringContainsString('card length should be 15 numbers or 18 numbers', $exception->getMessage());
         }
     }
 }
