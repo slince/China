@@ -51,7 +51,7 @@ class LazyLoader extends AbstractLazyCollection implements ResourceLoaderInterfa
     {
         $processed = [];
         foreach ($records as $record) {
-            $processed[] = $this->handleRawData($record);
+            $processed[] = $this->createRecord($record);
         }
         return $processed;
     }
@@ -59,7 +59,7 @@ class LazyLoader extends AbstractLazyCollection implements ResourceLoaderInterfa
     /**
      * {@inheritdoc}
      */
-    public function handleRawData(array $record)
+    public function createRecord(array $record)
     {
         return $record;
     }

@@ -51,9 +51,10 @@ class CrawlNationalityCommand extends CrawlCommand
         $populations = $this->extractPopulationData($tables->eq(2));
 
         $nationalities = $this->mergeData($nationalities,$populations);
-        $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($nationalities, JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($outputFile, \json_encode($nationalities, JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
+        return 0;
     }
 
     protected function extractPinyinData(Crawler $crawler)

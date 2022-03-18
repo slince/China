@@ -62,9 +62,9 @@ final class China
     protected function registerParameters()
     {
         $this->container->setParameters([
-            'resource.file.holidays' => RESOURCE_DIR.'holidays.json',
-            'resource.file.nationalities' => RESOURCE_DIR.'nationalities.json',
-            'resource.file.regions' => RESOURCE_DIR.'regions/regions.json',
+            'resource.file.holidays' => $this->resourceDir.'holidays.json',
+            'resource.file.nationalities' => $this->resourceDir.'nationalities.json',
+            'resource.file.regions' => $this->resourceDir.'regions/regions.json',
         ]);
     }
 

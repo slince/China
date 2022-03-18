@@ -41,9 +41,9 @@ interface AddressInterface extends \JsonSerializable
     /**
      * 获取Code.
      *
-     * @return string
+     * @return int
      */
-    public function getCode(): string;
+    public function getCode(): int;
 
     /**
      * 获取地址名称.
@@ -61,9 +61,9 @@ interface AddressInterface extends \JsonSerializable
 
     /**
      * 设置子地区
-     * @param array $children
+     * @param iterable $children
      */
-    public function setChildren(array $children);
+    public function setChildren(iterable $children);
 
     /**
      * 获取子地区.

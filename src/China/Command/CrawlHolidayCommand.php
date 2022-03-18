@@ -58,17 +58,18 @@ class CrawlHolidayCommand extends CrawlCommand
             return new Holiday($fontNode->text(), $type, $date);
         });
 
-        $this->filesystem->dumpFile($outputFile, \GuzzleHttp\json_encode($holidays, JSON_UNESCAPED_UNICODE));
+        $this->filesystem->dumpFile($outputFile, \json_encode($holidays, JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
+        return 0;
     }
 
-    protected function parseToDate($dateString)
+    protected function parseToDate(string $dateString)
     {
         return explode('/', trim($dateString, ']['));
     }
 
-    protected function convertColorToType($class)
+    protected function convertColorToType(string $class): string
     {
         $type = '';
         switch ($class) {

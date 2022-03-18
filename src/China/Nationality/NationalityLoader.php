@@ -20,8 +20,8 @@ class NationalityLoader extends LazyLoader
     /**
      * {@inheritdoc}
      */
-    public function handleRawData($record)
+    public function createRecord($record)
     {
-        return new Nationality($record['name'], $record['pinyin'], $record['population']);
+        return new Nationality($record['name'], $record['pinyin'], intval($record['population']));
     }
 }

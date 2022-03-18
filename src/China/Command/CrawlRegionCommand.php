@@ -74,6 +74,7 @@ class CrawlRegionCommand extends CrawlCommand
         $this->filesystem->dumpFile($outputFile, \json_encode($root->getChildren(), JSON_UNESCAPED_UNICODE));
 
         $style->writeln(sprintf('<info>Crawl completed, please check the file at "%s"</info>', realpath($outputFile)));
+        return 0;
     }
 
     /**

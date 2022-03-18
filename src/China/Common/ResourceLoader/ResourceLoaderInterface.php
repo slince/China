@@ -31,5 +31,5 @@ interface ResourceLoaderInterface extends Collection
      * @param array $record
      * @return array|object
      */
-    public function handleRawData(array $record);
+    public function createRecord(array $record);
 }

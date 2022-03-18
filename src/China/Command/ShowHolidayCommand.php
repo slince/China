@@ -33,7 +33,7 @@ class ShowHolidayCommand extends DashboardCommand
      */
     public function configure()
     {
-        $this->setName('dashboard:holiday');
+        $this->setName('view:holiday');
         $this->addOption('type', 't', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, '按照类型筛选');
         $this->addOption('all', 'a',  InputOption::VALUE_NONE, '展现全部数据');
         $this->setDescription('展示节假日信息');
@@ -73,6 +73,7 @@ class ShowHolidayCommand extends DashboardCommand
             ];
         }, $holidays);
         $style->table($headers, $rows);
+        return 0;
     }
 
     protected function checkTypes($types)

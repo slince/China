@@ -32,7 +32,7 @@ class ShowRegionCommand extends DashboardCommand
      */
     public function configure()
     {
-        $this->setName('dashboard:region');
+        $this->setName('view:region');
         $this->addOption('parent', 'p', InputOption::VALUE_OPTIONAL);
         $this->setDescription('展示我国省市县信息');
     }
@@ -64,5 +64,6 @@ class ShowRegionCommand extends DashboardCommand
             ];
         }, $regions);
         $style->table($headers, $rows);
+        return 0;
     }
 }

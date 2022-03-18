@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\Collection;
 abstract class Address implements AddressInterface
 {
     /**
-     * @var string
+     * @var int
      */
     protected $code;
 
@@ -40,7 +40,7 @@ abstract class Address implements AddressInterface
      */
     protected $children;
 
-    public function __construct(string $code, string $name, AddressInterface $parent = null, array $children = [])
+    public function __construct(int $code, string $name, AddressInterface $parent = null, $children = [])
     {
         $this->code = $code;
         $this->name = $name;
@@ -64,7 +64,7 @@ abstract class Address implements AddressInterface
     /**
      * {@inheritdoc}
      */
-    public function getCode(): string
+    public function getCode(): int
     {
         return $this->code;
     }
@@ -130,28 +130,28 @@ abstract class Address implements AddressInterface
             throw new \InvalidArgumentException('Missing parameter "type"');
         }
         $address = null;
+        $code = intval($data['code']);
         switch ($data['type']) {
             case AddressInterface::TYPE_PROVINCE:
-                $address = new Province($data['code'], $data['name'], $parent);
+                $address = new Province($code, $data['name'], $parent);
                 break;
             case AddressInterface::TYPE_CITY:
-                $address = new City($data['code'], $data['name'], $parent);
+                $address = new City($code, $data['name'], $parent);
                 break;
             case AddressInterface::TYPE_DISTRICT:
-                $address = new District($data['code'], $data['name'], $parent);
+                $address = new District($code, $data['name'], $parent);
                 break;
         }
         if (!$address) {
             throw new \InvalidArgumentException(sprintf('Bad parameter "type" with "%s"', $data['type']));
         }
         //子地区
-        if (isset($data['children'])) {
+        if (!empty($data['children'])) {
             $children = array_map(function($regionData) use ($address){
                 return static::createFromArray($regionData, $address);
             }, $data['children']);
             $address->setChildren(new RegionCollection($children));
         }
-
         return $address;
     }
 }

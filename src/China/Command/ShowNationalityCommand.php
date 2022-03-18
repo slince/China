@@ -25,7 +25,7 @@ class ShowNationalityCommand extends DashboardCommand
      */
     public function configure()
     {
-        $this->setName('dashboard:nationality');
+        $this->setName('view:nationality');
         $this->setDescription('展示民族数据信息');
     }
 
@@ -47,5 +47,6 @@ class ShowNationalityCommand extends DashboardCommand
             ];
         }, $nationalities);
         $style->table($headers, $rows);
+        return 0;
     }
 }

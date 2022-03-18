@@ -19,10 +19,16 @@ use China\Region\Location\AddressInterface;
 
 class RegionLoader extends LazyLoader
 {
+
+    protected function createRecords(array $records): array
+    {
+        return [$this->createRecord($records)];
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function handleRawData(array $record)
+    public function createRecord(array $record)
     {
         $rootData = [
             'type' => AddressInterface::TYPE_PROVINCE,
